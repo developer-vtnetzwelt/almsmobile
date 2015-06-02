@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/course_row"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/course_title"
+        style="@style/NormalTextBoldDark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="center_vertical"
+        android:layout_toLeftOf="@+id/download_course_btn" />
+
+    <TextView
+        android:id="@+id/course_draft"
+        style="@style/SmallTextDarkItalic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="center_vertical"
+        android:layout_below="@+id/course_title"
+        android:layout_toLeftOf="@+id/download_course_btn" />
+
+    <TextView
+        android:id="@+id/course_description"
+        style="@style/MediumTextDarkItalic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="center_vertical"
+        android:layout_below="@+id/course_draft"
+        android:layout_toLeftOf="@+id/download_course_btn" />
+
+    <Button
+        android:id="@+id/download_course_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>
