@@ -38,10 +38,7 @@ import org.digitalcampus.oppia.utils.HTTPConnectionUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-
-
-import com.splunk.mint.Mint;
+import com.bugsense.trace.BugSenseHandler;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -120,7 +117,7 @@ public class ResetTask extends AsyncTask<Payload, Object, Payload> {
 			payload.setResult(false);
 			payload.setResultResponse(ctx.getString(R.string.error_connection));
 		} catch (JSONException e) {
-			Mint.logException(e);
+			BugSenseHandler.sendException(e);
 			e.printStackTrace();
 			payload.setResult(false);
 			payload.setResultResponse(ctx.getString(R.string.error_processing_response));

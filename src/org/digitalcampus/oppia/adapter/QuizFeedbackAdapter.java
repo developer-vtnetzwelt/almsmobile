@@ -38,67 +38,82 @@ public class QuizFeedbackAdapter extends ArrayAdapter<QuizFeedback> {
 
 	private final Context ctx;
 	private final ArrayList<QuizFeedback> quizFeedbackList;
-	
-	public QuizFeedbackAdapter(Activity context, ArrayList<QuizFeedback> quizFeedbackList) {
+
+	public QuizFeedbackAdapter(Activity context,
+			ArrayList<QuizFeedback> quizFeedbackList) {
 		super(context, R.layout.widget_quiz_feedback_row, quizFeedbackList);
 		this.ctx = context;
 		this.quizFeedbackList = quizFeedbackList;
 	}
 
-    static class QuizFeedbackViewHolder{
-        TextView quizQuestion;
-        TextView quizUserResponse;
-        TextView quizFeedbackTitle;
-        TextView quizFeedbackText;
-        ImageView quizFeedbackIcon;
-    }
-	
+	static class QuizFeedbackViewHolder {
+		TextView quizQuestion;
+		TextView quizUserResponse;
+		TextView quizFeedbackTitle;
+		TextView quizFeedbackText;
+		TextView quiz_question_user_response_title;
+		ImageView quizFeedbackIcon;
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-        QuizFeedbackViewHolder viewHolder;
+		QuizFeedbackViewHolder viewHolder;
 
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView  = inflater.inflate(R.layout.widget_quiz_feedback_row, parent, false);
-            viewHolder = new QuizFeedbackViewHolder();
-            viewHolder.quizQuestion = (TextView) convertView.findViewById(R.id.quiz_question_text);
-            viewHolder.quizUserResponse = (TextView) convertView.findViewById(R.id.quiz_question_user_response_text);
-            viewHolder.quizFeedbackText = (TextView) convertView.findViewById(R.id.quiz_question_user_feedback_text);
-            viewHolder.quizFeedbackTitle = (TextView) convertView.findViewById(R.id.quiz_question_user_feedback_title);
-            viewHolder.quizFeedbackIcon = (ImageView) convertView.findViewById(R.id.quiz_question_feedback_image);
-            convertView.setTag(viewHolder);
-        }
-        else{
-            viewHolder = (QuizFeedbackViewHolder) convertView.getTag();
-        }
+		if (convertView == null) {
+			LayoutInflater inflater = (LayoutInflater) ctx
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			convertView = inflater.inflate(R.layout.widget_quiz_feedback_row,
+					parent, false);
+			viewHolder = new QuizFeedbackViewHolder();
+			viewHolder.quizQuestion = (TextView) convertView
+					.findViewById(R.id.quiz_question_text);
+			viewHolder.quizUserResponse = (TextView) convertView
+					.findViewById(R.id.quiz_question_user_response_text);
+			viewHolder.quizFeedbackText = (TextView) convertView
+					.findViewById(R.id.quiz_question_user_feedback_text);
+			viewHolder.quizFeedbackTitle = (TextView) convertView
+					.findViewById(R.id.quiz_question_user_feedback_title);
+			viewHolder.quizFeedbackIcon = (ImageView) convertView
+					.findViewById(R.id.quiz_question_feedback_image);
+			viewHolder.quiz_question_user_response_title = (TextView) convertView
+					.findViewById(R.id.quiz_question_user_response_title);
+			convertView.setTag(viewHolder);
+		} else {
+			viewHolder = (QuizFeedbackViewHolder) convertView.getTag();
+		}
 
-	    QuizFeedback qf = quizFeedbackList.get(position);
-        String userResponseText = "";
-        for (int i=0; i<qf.getUserResponse().size();i++){
-            userResponseText += qf.getUserResponse().get(i);
-            if (i+1<qf.getUserResponse().size()){
-                userResponseText += "\n";
-            }
-        }
-
-        viewHolder.quizQuestion.setText(qf.getQuestionText());
-        viewHolder.quizUserResponse.setText(userResponseText);
-
-	    if (qf.getFeedbackText() != null && !qf.getFeedbackText().equals("")){
-            viewHolder.quizFeedbackText.setText(qf.getFeedbackText());
-	    } else {
-            //If there's no feedback to show, hide both text and title
-            viewHolder.quizFeedbackTitle.setVisibility(View.GONE);
-            viewHolder.quizFeedbackText.setVisibility(View.GONE);
-	    }
-
-        viewHolder.quizFeedbackIcon.setImageResource(
-                (qf.getScore() >= Quiz.QUIZ_QUESTION_PASS_THRESHOLD)?
-                R.drawable.quiz_tick:
-                R.drawable.quiz_cross
-        );
+		QuizFeedback qf = quizFeedbackList.get(position);
+		String userResponseText = "";
+		if (qf.getUserResponse() != null) {
+			for (int i = 0; i < qf.getUserResponse().size(); i++) {
+				userResponseText += qf.getUserResponse().get(i);
+				if (i + 1 < qf.getUserResponse().size()) {
+					userResponseText += "\n";
+				}
+			}
+		}
+			else{
+				viewHolder.quizFeedbackIcon.setVisibility(View.GONE);
+				viewHolder.quiz_question_user_response_title
+						.setVisibility(View.GONE);
+			}
 		
-	    return convertView;
+		viewHolder.quizQuestion.setText(qf.getQuestionText());
+		viewHolder.quizUserResponse.setText(userResponseText);
+
+		if (qf.getFeedbackText() != null && !qf.getFeedbackText().equals("")) {
+			viewHolder.quizFeedbackText.setText(qf.getFeedbackText());
+		} else {
+			// If there's no feedback to show, hide both text and title
+			viewHolder.quizFeedbackTitle.setVisibility(View.GONE);
+			viewHolder.quizFeedbackText.setVisibility(View.GONE);
+		}
+
+		viewHolder.quizFeedbackIcon
+				.setImageResource((qf.getScore() >= Quiz.QUIZ_QUESTION_PASS_THRESHOLD) ? R.drawable.quiz_tick
+						: R.drawable.quiz_cross);
+
+		return convertView;
 	}
 }

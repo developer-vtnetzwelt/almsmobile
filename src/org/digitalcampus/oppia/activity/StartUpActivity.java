@@ -17,6 +17,7 @@
 
 package org.digitalcampus.oppia.activity;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -27,7 +28,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.TextView;
 
-import com.splunk.mint.Mint;
+import com.bugsense.trace.BugSenseHandler;
 
 import org.digitalcampus.mobile.learning.R;
 import org.digitalcampus.oppia.application.MobileLearning;
@@ -53,12 +54,12 @@ public class StartUpActivity extends Activity implements UpgradeListener, PostIn
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mint.initAndStartSession(this, MobileLearning.MINT_API_KEY);
+        BugSenseHandler.initAndStartSession(this, MobileLearning.BUGSENSE_API_KEY);
         
         setContentView(R.layout.start_up);
         tvProgress = (TextView) this.findViewById(R.id.start_up_progress);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Mint.setUserIdentifier(prefs.getString(PrefsActivity.PREF_USER_NAME, "anon"));
+        BugSenseHandler.setUserIdentifier(prefs.getString(PrefsActivity.PREF_USER_NAME, "anon"));
         
         UpgradeManagerTask umt = new UpgradeManagerTask(this);
 		umt.setUpgradeListener(this);

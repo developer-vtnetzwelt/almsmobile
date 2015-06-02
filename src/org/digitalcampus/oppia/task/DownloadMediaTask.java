@@ -35,12 +35,13 @@ import org.digitalcampus.oppia.model.DownloadProgress;
 import org.digitalcampus.oppia.model.Media;
 import org.digitalcampus.oppia.utils.storage.FileUtils;
 
-import com.splunk.mint.Mint;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+
+import com.bugsense.trace.BugSenseHandler;
+
 
 public class DownloadMediaTask extends AsyncTask<Payload, DownloadProgress, Payload>{
 
@@ -139,7 +140,7 @@ public class DownloadMediaTask extends AsyncTask<Payload, DownloadProgress, Payl
 				payload.setResult(false);
 				payload.setResultResponse(ctx.getString(R.string.error_media_download));
 			} catch (NoSuchAlgorithmException e) {
-				Mint.logException(e);
+				BugSenseHandler.sendException(e);
 				e.printStackTrace();
 				payload.setResult(false);
 				payload.setResultResponse(ctx.getString(R.string.error_media_download));

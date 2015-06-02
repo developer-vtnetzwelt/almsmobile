@@ -40,10 +40,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.splunk.mint.Mint;
-
 import android.content.Context;
 import android.os.AsyncTask;
+
+import com.bugsense.trace.BugSenseHandler;
 
 public class ScheduleUpdateTask extends AsyncTask<Payload, DownloadProgress, Payload>{
 	
@@ -122,7 +122,7 @@ public class ScheduleUpdateTask extends AsyncTask<Payload, DownloadProgress, Pay
 			}
 		
 		} catch (JSONException e) {
-			Mint.logException(e);
+			BugSenseHandler.sendException(e);
 			e.printStackTrace();
 			payload.setResult(false);
 			payload.setResultResponse(ctx.getString(R.string.error_processing_response));

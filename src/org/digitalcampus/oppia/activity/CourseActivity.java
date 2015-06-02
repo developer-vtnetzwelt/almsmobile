@@ -105,6 +105,7 @@ public class CourseActivity extends FragmentActivity implements ActionBar.TabLis
 			actionBar.setHomeButtonEnabled(true);
 			
 		}
+		loadActivities();
 		
 	}
 	
@@ -127,7 +128,7 @@ public class CourseActivity extends FragmentActivity implements ActionBar.TabLis
 			}
 
 		});
-        loadActivities();
+        //loadActivities();
 	}
 
 	@Override

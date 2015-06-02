@@ -1,9 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_quiz_results"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" 
-    android:id="@+id/widget_quiz_results">
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:id="@+id/quiz_results_result_await_rl"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/quiz_results_result_await_msg1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:gravity="center"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/quiz_results_result_await_msg2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="10sp"
+            android:background="@color/background_dark"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/quiz_results__result_await_question_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/quiz_results__result_await_question_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/quiz_results_result_scorecard_ll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <LinearLayout
+            android:id="@+id/quiz_results_result_percentage_linLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20sp"
+                android:layout_marginTop="60sp" >
+
+            <ImageView
+                android:id="@+id/quiz_results_result_percentage_image_indecator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/quiz_tick"
+                android:layout_gravity="left|center_vertical" />
+
+            <TextView
+                android:id="@+id/quiz_results_result_scorecard_percentage"
+                android:layout_width="fill_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/quiz_results__result_scorecard_question_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="Your Essay Question was:"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:layout_below="@+id/quiz_results_result_percentage_linLayout"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/quiz_results__result_scorecard_question_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/quiz_results__result_scorecard_question_header"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/darker_gray"
+            android:gravity="left"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/quiz_results__result_scorecard_feedback_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_below="@+id/quiz_results__result_scorecard_question_title"
+            android:text="Feedback:"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/quiz_results__result_scorecard_feedback_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/quiz_results__result_scorecard_feedback_header"
+            android:layout_gravity="center_vertical"
+            android:gravity="left"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/quiz_results_top_control_bar"
@@ -50,17 +170,16 @@
             android:layout_height="50dp"
             android:layout_gravity="center" />
     </LinearLayout>
-    
+
     <ListView
         android:id="@+id/quiz_results_feedback"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/quiz_results_top_control_bar"
         android:layout_above="@id/quiz_results_bottom_control_bar"
+        android:layout_below="@id/quiz_results_top_control_bar"
         android:cacheColorHint="#00000000"
         android:divider="@color/list_divider"
-        android:dividerHeight="1dp" />
-
-    
+        android:dividerHeight="1dp"
+        android:visibility="gone" />
 
 </RelativeLayout>

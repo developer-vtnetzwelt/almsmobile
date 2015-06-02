@@ -17,7 +17,6 @@
 
 package org.digitalcampus.oppia.adapter;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -38,8 +37,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 public class SearchResultsListAdapter  extends ArrayAdapter<SearchResult>{
 
@@ -94,13 +91,11 @@ public class SearchResultsListAdapter  extends ArrayAdapter<SearchResult>{
 
         convertView.setTag(R.id.TAG_COURSE,sr.getCourse());
         convertView.setTag(R.id.TAG_ACTIVITY_DIGEST,sr.getActivity().getDigest());
-
-        if(sr.getCourse().getImageFile() != null){
-            String image = sr.getCourse().getImageFileFromRoot();
-            Picasso.with(ctx).load(new File(image))
-                    .placeholder(R.drawable.default_course)
-                    .into(viewHolder.courseImage);
-        }
+		
+		if(sr.getCourse().getImageFile() != null){
+			BitmapDrawable courseImageBitmap = ImageUtils.LoadBMPsdcard(sr.getCourse().getImageFileFromRoot(), ctx.getResources(), MobileLearning.APP_LOGO);
+            viewHolder.courseImage.setImageDrawable(courseImageBitmap);
+		}
 	   
 	    return convertView;
 	}

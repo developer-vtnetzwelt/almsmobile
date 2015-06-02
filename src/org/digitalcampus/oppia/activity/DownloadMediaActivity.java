@@ -36,8 +36,6 @@ import org.digitalcampus.oppia.task.Payload;
 import org.digitalcampus.oppia.utils.ConnectionUtils;
 import org.digitalcampus.oppia.utils.UIUtils;
 
-import com.splunk.mint.Mint;
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -48,6 +46,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.bugsense.trace.BugSenseHandler;
 
 public class DownloadMediaActivity extends AppActivity implements DownloadCompleteListener {
 
@@ -160,10 +160,10 @@ public class DownloadMediaActivity extends AppActivity implements DownloadComple
 			f.close();
 			UIUtils.showAlert(this, R.string.info, this.getString(R.string.download_via_pc_message,filename));
 		} catch (FileNotFoundException e) {
-			Mint.logException(e);
+			BugSenseHandler.sendException(e);
 			e.printStackTrace();
 		} catch (IOException e) {
-			Mint.logException(e);
+			BugSenseHandler.sendException(e);
 			e.printStackTrace();
 		}
 	}
@@ -193,9 +193,6 @@ public class DownloadMediaActivity extends AppActivity implements DownloadComple
                 ArrayList<Object> data = new ArrayList<Object>();
                 data.add(mediaToDownload);
                 Payload p = new Payload(data);
-
-                mediaToDownload.setDownloading(true);
-                dmla.notifyDataSetChanged();
 
                 DownloadMediaTask task = new DownloadMediaTask(DownloadMediaActivity.this);
                 task.setDownloadListener(tasksController);

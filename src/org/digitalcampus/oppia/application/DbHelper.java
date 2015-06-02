@@ -30,12 +30,10 @@ import org.digitalcampus.oppia.model.SearchResult;
 import org.digitalcampus.oppia.model.TrackerLog;
 import org.digitalcampus.oppia.model.User;
 import org.digitalcampus.oppia.task.Payload;
-import org.digitalcampus.oppia.utils.xmlreaders.CourseXMLReader;
+import org.digitalcampus.oppia.utils.CourseXMLReader;
 import org.joda.time.DateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.splunk.mint.Mint;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -46,6 +44,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.util.Log;
+
+import com.bugsense.trace.BugSenseHandler;
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -752,7 +752,7 @@ public class DbHelper extends SQLiteOpenHelper {
 				}
 				content = json.toString();
 			} catch (JSONException e) {
-				Mint.logException(e);
+				BugSenseHandler.sendException(e);
 				e.printStackTrace();
 			}
 			
@@ -1040,7 +1040,7 @@ public class DbHelper extends SQLiteOpenHelper {
 	    		CourseXMLReader cxr = fetchedXMLCourses.get(courseId);
 				try {
                     if (cxr == null){
-                        cxr = new CourseXMLReader(course.getCourseXMLLocation(), course.getCourseId(), ctx);
+                        cxr = new CourseXMLReader(course.getCourseXMLLocation(), ctx);
                         fetchedXMLCourses.put(courseId, cxr);
                     }
 					result.setSection(cxr.getSection(sectionOrderId));

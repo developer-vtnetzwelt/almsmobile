@@ -24,7 +24,7 @@ import android.os.StatFs;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-
+import com.bugsense.trace.BugSenseHandler;
 
 import org.digitalcampus.oppia.application.MobileLearning;
 
@@ -271,7 +271,7 @@ public class FileUtils {
             bytesAvailable = stat.getBlockSizeLong() * stat.getAvailableBlocksLong();
         }
         else{
-            bytesAvailable = (long)stat.getBlockSize() * (long)stat.getAvailableBlocks();
+            bytesAvailable = stat.getBlockSize() * stat.getAvailableBlocks();
         }
         return bytesAvailable;
     }

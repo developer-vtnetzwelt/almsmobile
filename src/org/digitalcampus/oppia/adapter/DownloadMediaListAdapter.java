@@ -30,8 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class DownloadMediaListAdapter extends ArrayAdapter<Media> {
@@ -52,8 +50,7 @@ public class DownloadMediaListAdapter extends ArrayAdapter<Media> {
     static class DownloadMediaViewHolder{
         TextView mediaTitle;
         TextView mediaFileSize;
-        ImageButton downloadBtn;
-        ProgressBar downloadProgress;
+        Button downloadBtn;
     }
 
 	@Override
@@ -67,8 +64,7 @@ public class DownloadMediaListAdapter extends ArrayAdapter<Media> {
             viewHolder = new DownloadMediaViewHolder();
             viewHolder.mediaTitle = (TextView) convertView.findViewById(R.id.media_title);
             viewHolder.mediaFileSize = (TextView) convertView.findViewById(R.id.media_file_size);
-            viewHolder.downloadBtn = (ImageButton) convertView.findViewById(R.id.action_btn);
-            viewHolder.downloadProgress = (ProgressBar) convertView.findViewById(R.id.download_progress);
+            viewHolder.downloadBtn = (Button) convertView.findViewById(R.id.action_btn);
             convertView.setTag(viewHolder);
         }
         else{
@@ -86,20 +82,12 @@ public class DownloadMediaListAdapter extends ArrayAdapter<Media> {
 
         viewHolder.downloadBtn.setTag(position); //For passing the list item index
         viewHolder.downloadBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (onClickListener != null)
+         	public void onClick(View v) {
+                if(onClickListener != null)
                     onClickListener.onClick((Integer) v.getTag());
-            }
-        });
-        if (m.isDownloading()){
-            viewHolder.downloadBtn.setImageResource(R.drawable.ic_action_cancel);
-            viewHolder.downloadProgress.setVisibility(View.VISIBLE);
-        }
-        else{
-            viewHolder.downloadBtn.setImageResource(R.drawable.ic_action_download);
-            viewHolder.downloadProgress.setVisibility(View.GONE);
-        }
-        return convertView;
+         	}
+         });
+		return convertView;
 	}
 	
     public void setOnClickListener(ListInnerBtnOnClickListener onClickListener) {

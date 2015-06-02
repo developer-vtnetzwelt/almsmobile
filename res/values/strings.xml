@@ -66,6 +66,10 @@
     <string name="widget_quiz_next">Next &gt;&gt;</string>
     <string name="widget_quiz_prev">&lt;&lt; Prev</string>
     <string name="widget_quiz_getresults">Get Results</string>
+    <string name="widget_quiz_sendforevaluation">Send for evaluation</string>
+    <string name="widget_quiz_result_await_msg1">Your essay has been submitted to your teacher for grading.</string>
+    <string name="widget_quiz_result_await_msg2">You will be notified once the essay has been graded.</string>
+    <string name="widget_quiz_result_await_msg3">Your Essay Question Was:</string>
     <string name="widget_quiz_noanswergiven">Please give an answer before moving to the next question</string>
     <string name="widget_quiz_progress">Question %1$d of %2$d</string>
  	<string name="widget_quiz_results_score">You scored: %1$.0f%%</string>
@@ -264,7 +268,6 @@
 	<string name="media_player_description">Oppia Media Player</string>
 	
 	<string name="upgradev49_1">Copying files to new location - this may take several minutes, so please be patient</string>
-    <string name="loading_course">Loading course...</string>
 
 </resources>
 

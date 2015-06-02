@@ -31,8 +31,6 @@ import org.digitalcampus.oppia.utils.UIUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.splunk.mint.Mint;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,6 +38,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import com.bugsense.trace.BugSenseHandler;
 
 public class TagSelectActivity extends AppActivity implements APIRequestListener {
 
@@ -179,7 +179,7 @@ public class TagSelectActivity extends AppActivity implements APIRequestListener
 				json = new JSONObject(response.getResultResponse());
 				refreshTagList();
 			} catch (JSONException e) {
-				Mint.logException(e);
+				BugSenseHandler.sendException(e);
 				e.printStackTrace();
 				UIUtils.showAlert(this, R.string.loading, R.string.error_connection);
 			}

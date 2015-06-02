@@ -18,7 +18,7 @@
 
 package org.digitalcampus.oppia.exception;
 
-import com.splunk.mint.Mint;
+import com.bugsense.trace.BugSenseHandler;
 
 public class InvalidXMLException extends Exception {
 
@@ -26,7 +26,7 @@ public class InvalidXMLException extends Exception {
 	private static final long serialVersionUID = -2986632352088699106L;
 	
 	public InvalidXMLException(Exception e){
-		Mint.logException(e);
+		BugSenseHandler.sendException(e);
 		e.printStackTrace();
 	}
 	

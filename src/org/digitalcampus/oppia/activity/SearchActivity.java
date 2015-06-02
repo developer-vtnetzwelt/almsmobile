@@ -25,8 +25,6 @@ import org.digitalcampus.oppia.application.DbHelper;
 import org.digitalcampus.oppia.listener.DBListener;
 import org.digitalcampus.oppia.model.Course;
 import org.digitalcampus.oppia.model.SearchResult;
-
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -102,7 +100,6 @@ public class SearchActivity extends AppActivity {
         searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             //@Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                hideKeyboard(v);
                 performSearch();
                 return false;
             }
@@ -113,7 +110,10 @@ public class SearchActivity extends AppActivity {
         searchButton.setClickable(true);
         searchButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-                hideKeyboard(v);
+                //We hide the keyboard
+                InputMethodManager imm =  (InputMethodManager) SearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                 performSearch();
 			}
 		});
@@ -155,12 +155,6 @@ public class SearchActivity extends AppActivity {
         }
     }
 
-    private void hideKeyboard(View v){
-        //We hide the keyboard
-        InputMethodManager imm =  (InputMethodManager) SearchActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
-
     private void performSearch(){
         String newSearch = searchText.getText().toString();
         if (!newSearch.equals(currentSearch)){
@@ -177,22 +171,12 @@ public class SearchActivity extends AppActivity {
         }
     }
 
-    protected void setFadeAnimation(final View view, boolean visible){
+    protected void setFadeAnimation(View view, boolean visible){
         Animation fadeAnimation = new AlphaAnimation(visible?0:1, visible?1:0);
-        fadeAnimation.setInterpolator(new DecelerateInterpolator());
+        fadeAnimation.setInterpolator(new DecelerateInterpolator()); //add this
         fadeAnimation.setDuration(700);
         fadeAnimation.setFillAfter(true);
-        //view.setAnimation(fadeAnimation);
-
-        ValueAnimator animator = ValueAnimator.ofFloat(visible?1f:0f, visible?0f:1f);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            public void onAnimationUpdate(ValueAnimator valueAnimator){
-                view.setTranslationY( (Float) valueAnimator.getAnimatedValue() * -80 );
-                view.setAlpha(1f - (Float) valueAnimator.getAnimatedValue());
-            }
-        });
-        animator.setDuration(700);
-        animator.start();
+        view.setAnimation(fadeAnimation);
     }
 
     private class SearchTask extends AsyncTask<String, Object, ArrayList<SearchResult>> implements DBListener{
