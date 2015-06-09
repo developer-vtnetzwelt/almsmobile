@@ -108,6 +108,7 @@ public class LoginTask extends AsyncTask<Payload, Object, Payload> {
 					u.setPasswordEncrypted();
 					u.setFirstname(jsonResp.getString("first_name"));
 					u.setLastname(jsonResp.getString("last_name"));
+					prefs.edit().putString("user_id", jsonResp.getString("resource_uri")).commit();
 					try {
 						u.setPoints(jsonResp.getInt("points"));
 						u.setBadges(jsonResp.getInt("badges"));

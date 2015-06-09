@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class HTTPConnectionUtils extends DefaultHttpClient {
 	
@@ -76,7 +77,21 @@ public class HTTPConnectionUtils extends DefaultHttpClient {
 		if(!baseUrl.endsWith("?"))
 			baseUrl += "?";
 		baseUrl += paramString;
+		
+		
+		getInfo(pairs);
+		
+		
 		return baseUrl;
+	}
+
+	private void getInfo(List<NameValuePair> pairs) {
+		// TODO Auto-generated method stub
+		if(pairs!=null){
+			for(int i=0;i<pairs.size();i++){
+				Log.e(pairs.get(i).getName()+"*******",pairs.get(i).getValue());
+			}
+		}
 	}
 
 }

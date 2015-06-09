@@ -296,6 +296,7 @@ if(courseListAdapter==null){
 				Editor editor = prefs.edit();
 				editor.putString(PrefsActivity.PREF_USER_NAME, "");
 				editor.putString(PrefsActivity.PREF_API_KEY, "");
+				editor.putInt("ESSAY_QUESTION_ATTEMPT_STATUS",0);
 				editor.putInt(PrefsActivity.PREF_BADGES, 0);
 				editor.putInt(PrefsActivity.PREF_POINTS, 0);
 				editor.commit();

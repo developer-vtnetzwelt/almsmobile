@@ -102,6 +102,16 @@ public class QuizWidget extends WidgetFactory {
 	private boolean isOnResultsPage = false;
 	private ViewGroup container;
 	QuizQuestion q = null;
+	
+	boolean clickedOnSendForEvaluation = false;
+	
+	private String PREF_QUIZ_ID;
+	private String PREF_USER_RESPONSE;
+	//private String PREF_MAIN_SCORE;
+	private String PREF_FEEDBACK;
+	private String PREF_SCORE;
+	
+	private String localQuizId="none";
 
 	private boolean showingResultForEssayQuestion = false;
 
@@ -114,6 +124,9 @@ public class QuizWidget extends WidgetFactory {
 		args.putSerializable(Course.TAG, course);
 		args.putBoolean(CourseActivity.BASELINE_TAG, isBaseline);
 		myFragment.setArguments(args);
+		
+		
+		
 
 		return myFragment;
 	}
@@ -134,6 +147,17 @@ public class QuizWidget extends WidgetFactory {
 			Bundle savedInstanceState) {
 		prefs = PreferenceManager.getDefaultSharedPreferences(super
 				.getActivity());
+		
+
+		
+		PREF_QUIZ_ID=prefs.getString("QUIZ_ID", null);
+		PREF_USER_RESPONSE=prefs.getString("USER_RESPONSE", null);
+		//PREF_MAIN_SCORE=prefs.getString("MAIN_SCORE", null);
+		PREF_FEEDBACK=prefs.getString("FEEDBACK", null);
+		PREF_SCORE=prefs.getString("SCORE", null);
+		
+		
+		
 		View vv = super.getLayoutInflater(savedInstanceState).inflate(
 				R.layout.widget_quiz, null);
 		this.container = container;
@@ -164,6 +188,8 @@ public class QuizWidget extends WidgetFactory {
 		outState.putSerializable("widget_config", getWidgetConfig());
 		outState.putBoolean("key_showingResultForEssayQuestion",
 				showingResultForEssayQuestion);
+		outState.putString("score_save", PREF_SCORE);
+		outState.putString("local_quiz_id", localQuizId);
 	}
 
 	@Override
@@ -178,9 +204,13 @@ public class QuizWidget extends WidgetFactory {
 		if (savedInstanceState != null) {
 			showingResultForEssayQuestion = savedInstanceState
 					.getBoolean("key_showingResultForEssayQuestion");
+			PREF_SCORE=savedInstanceState
+					.getString("score_save");
+			localQuizId=savedInstanceState
+					.getString("local_quiz_id");
 		}
 
-		loadQuiz();
+		//loadQuiz();
 	}
 
 	@Override
@@ -195,12 +225,24 @@ public class QuizWidget extends WidgetFactory {
 			this.quiz.load(quizContent, prefs.getString(
 					PrefsActivity.PREF_LANGUAGE, Locale.getDefault()
 							.getLanguage()));
+			Log.e("quiz id ******",""+quiz.getID());
+			localQuizId=String.valueOf(quiz.getID());
 		}
 		if (this.isOnResultsPage) {
 			if (q instanceof Essay || showingResultForEssayQuestion) {
 				// log the activity as complete
 
-				showSentForEvaluationScreen(-1,null);
+				if(localQuizId.equalsIgnoreCase(PREF_QUIZ_ID)){
+					if(PREF_SCORE.equalsIgnoreCase("0.00")){
+						showSentForEvaluationScreen(-0.1,null);
+					}else{
+						showSentForEvaluationScreen(Double.valueOf(PREF_SCORE),PREF_FEEDBACK);
+					}
+				} if(PREF_QUIZ_ID==null){
+					showSentForEvaluationScreen(-0.1,null);
+				}
+				
+				
 
 			} else {
 				this.showResults();
@@ -309,6 +351,7 @@ public class QuizWidget extends WidgetFactory {
 			}
 
 		}
+		
 
 		if (q instanceof MultiChoice) {
 			qw = new MultiChoiceWidget(super.getActivity(), getView(),
@@ -354,7 +397,16 @@ public class QuizWidget extends WidgetFactory {
 					if(prefs.getInt("ESSAY_QUESTION_ATTEMPT_STATUS", 0)==0){
 						return true;
 						}else if(prefs.getInt("ESSAY_QUESTION_ATTEMPT_STATUS", 0)==1){
-							showSentForEvaluationScreen(-1,null);
+							if(localQuizId.equalsIgnoreCase(PREF_QUIZ_ID)){
+								
+								if(PREF_SCORE.equalsIgnoreCase("0.00")){
+									showSentForEvaluationScreen(-0.1,null);
+								}else{
+									showSentForEvaluationScreen(Double.valueOf(PREF_SCORE),PREF_FEEDBACK);
+								}
+							} else if(PREF_QUIZ_ID==null){
+								showSentForEvaluationScreen(-0.1,null);
+							}
 							return false;
 							}
 				}
@@ -423,8 +475,16 @@ public class QuizWidget extends WidgetFactory {
 									|| showingResultForEssayQuestion) {
 								// log the activity as complete
 
-								showSentForEvaluationScreen(-1,null);
-
+								if(localQuizId.equalsIgnoreCase(PREF_QUIZ_ID)){
+									if(PREF_SCORE.equalsIgnoreCase("0.00")){
+										showSentForEvaluationScreen(-0.1,null);
+									}else{
+										showSentForEvaluationScreen(Double.valueOf(PREF_SCORE),PREF_FEEDBACK);
+									}
+								}else {
+									showSentForEvaluationScreen(-0.1,null);
+									
+								}
 							} else {
 
 								showResults();
@@ -452,6 +512,7 @@ public class QuizWidget extends WidgetFactory {
 			if (q instanceof Essay) {
 				nextBtn.setText(super.getActivity().getString(
 						R.string.widget_quiz_sendforevaluation));
+				clickedOnSendForEvaluation = true;
 			} else {
 				nextBtn.setText(super.getActivity().getString(
 						R.string.widget_quiz_getresults));
@@ -459,16 +520,15 @@ public class QuizWidget extends WidgetFactory {
 		}
 	}
 
-	protected void showSentForEvaluationScreen(int score,String feedback) {
+	protected void showSentForEvaluationScreen(Double score,String feedback) {
 		
-		Random r = new Random();
-		score = r.nextInt(80 - 65) + 65;
-		if(score>69){
-		feedback="You did really great job on the essay question!"; 
-		}else{
-			feedback="You should go back and study more and retake the essay."; 
-		}
-
+//if(score>0.00){
+		//if(score>69){
+		//feedback="You did really great job on the essay question!"; 
+		//}else{
+		//	feedback="You should go back and study more and retake the essay."; 
+		//}
+//}
 		prefs.edit().putInt("ESSAY_QUESTION_ATTEMPT_STATUS", 1).commit();
 		prefs.edit()
 				.putString("UNAME_ESSAY_QUESTION_ATTEMPT_STATUS",
@@ -479,21 +539,30 @@ public class QuizWidget extends WidgetFactory {
 		prefs.edit()
 				.putInt("ACTIVITY_ESSAY_QUESTION_ATTEMPT_STATUS",
 						activity.getActId()).commit();
+		prefs.edit()
+		.putInt("ACTIVITY_ESSAY_QUESTION_QUIZ_ID",
+				quiz.getID()).commit();
+		
+		
 
 		isOnResultsPage = true;
 
 		showingResultForEssayQuestion = true;
+		
+		if(clickedOnSendForEvaluation==true){
 
 		// save results ready to send back to the quiz server
 		String data = quiz.getResultObject().toString();
 		DbHelper db = new DbHelper(getActivity());
 		db.insertQuizResult(data, course.getCourseId());
 		DatabaseManager.getInstance().closeDatabase();
+		clickedOnSendForEvaluation=false;
+		}
 
 		// Check if quiz results layout is already loaded
 		View quizResultsLayout = getView().findViewById(
 				R.id.widget_quiz_results);
-		if(score==-1){
+		if(score==-0.1){
 		if (quizResultsLayout == null) {
 			// load new layout
 			View C = getView().findViewById(R.id.quiz_progress);
@@ -574,7 +643,7 @@ public class QuizWidget extends WidgetFactory {
 					.findViewById(R.id.quiz_results__result_scorecard_feedback_title);
 			ImageView quiz_results_result_percentage_image_indecator = (ImageView) getView().findViewById(R.id.quiz_results_result_percentage_image_indecator);
 			Resources res = getResources(); // need this to fetch the drawable
-			if(score>69){
+			if(score>0.69){
 				Drawable draw = res.getDrawable( R.drawable.quiz_tick );
 				quiz_results_result_percentage_image_indecator.setImageDrawable(draw);
 			}else{
@@ -609,6 +678,7 @@ public class QuizWidget extends WidgetFactory {
 					R.string.widget_quiz_baseline_goto_course));
 			restartBtn.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
+					clearEssayQuizPref();
 					QuizWidget.this.getActivity().finish();
 				}
 			});
@@ -621,24 +691,48 @@ public class QuizWidget extends WidgetFactory {
 					QuizWidget.this.restart();
 				}
 
-				private void clearEssayQuizPref() {
-					// TODO Auto-generated method stub
-					prefs.edit().putInt("ESSAY_QUESTION_ATTEMPT_STATUS", 0)
-							.commit();
-					prefs.edit()
-							.putString("UNAME_ESSAY_QUESTION_ATTEMPT_STATUS",
-									prefs.getString("prefUsername", null))
-							.commit();
-					prefs.edit()
-							.putInt("COURSE_NAME_ESSAY_QUESTION_ATTEMPT_STATUS",
-									course.getCourseId()).commit();
-					prefs.edit()
-							.putInt("ACTIVITY_ESSAY_QUESTION_ATTEMPT_STATUS",
-									activity.getActId()).commit();
-
-				}
+		
 			});
 		}
+
+	}
+	
+	public void clearEssayQuizPref() {
+		// TODO Auto-generated method stub
+		
+		
+		PREF_QUIZ_ID=prefs.getString("QUIZ_ID", null);
+		PREF_USER_RESPONSE=prefs.getString("USER_RESPONSE", null);
+		//PREF_MAIN_SCORE=prefs.getString("MAIN_SCORE", null);
+		PREF_FEEDBACK=prefs.getString("FEEDBACK", null);
+		PREF_SCORE=prefs.getString("SCORE", null);
+		
+		prefs.edit().putInt("ESSAY_QUESTION_ATTEMPT_STATUS", 0)
+				.commit();
+		
+		
+		
+		prefs.edit().putString("QUIZ_ID", null)
+		.commit();
+		prefs.edit().putString("USER_RESPONSE", null)
+		.commit();
+		prefs.edit().putString("FEEDBACK", null)
+		.commit();
+		prefs.edit().putString("SCORE", null)
+		.commit();
+		
+		PREF_SCORE="-0.1";
+		
+		prefs.edit()
+				.putString("UNAME_ESSAY_QUESTION_ATTEMPT_STATUS",
+						prefs.getString("prefUsername", null))
+				.commit();
+		prefs.edit()
+				.putInt("COURSE_NAME_ESSAY_QUESTION_ATTEMPT_STATUS",
+						course.getCourseId()).commit();
+		prefs.edit()
+				.putInt("ACTIVITY_ESSAY_QUESTION_ATTEMPT_STATUS",
+						activity.getActId()).commit();
 
 	}
 
@@ -774,6 +868,7 @@ public class QuizWidget extends WidgetFactory {
 			QuizFeedbackAdapter qfa = new QuizFeedbackAdapter(
 					super.getActivity(), quizFeedback);
 			questionFeedbackLV.setAdapter(qfa);
+			questionFeedbackLV.setVisibility(View.VISIBLE);
 		}
 
 		// Show restart or continue button

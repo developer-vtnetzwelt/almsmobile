@@ -59,6 +59,10 @@ public class MobileLearning extends Application {
 	public static final String SERVER_AWARDS_PATH = OPPIAMOBILE_API + "awards/";
 	public static final String SERVER_COURSES_NAME = "courses";
 	
+	
+	public static final String GET_ESSAY_ANSWER = OPPIAMOBILE_API+"quizattempt/";
+	
+	
 	// general other settings
 	public static final String BUGSENSE_API_KEY = "26c9c657";
 	public static final int DOWNLOAD_COURSES_DISPLAY = 1; //this no of courses must be displayed for the 'download more courses' option to disappear

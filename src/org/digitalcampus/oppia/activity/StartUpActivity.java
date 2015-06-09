@@ -18,38 +18,60 @@
 package org.digitalcampus.oppia.activity;
 
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.widget.TextView;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
-import com.bugsense.trace.BugSenseHandler;
-
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.digitalcampus.mobile.learning.R;
 import org.digitalcampus.oppia.application.MobileLearning;
+import org.digitalcampus.oppia.listener.APIRequestListener;
 import org.digitalcampus.oppia.listener.InstallCourseListener;
 import org.digitalcampus.oppia.listener.PostInstallListener;
 import org.digitalcampus.oppia.listener.UpgradeListener;
 import org.digitalcampus.oppia.model.DownloadProgress;
+import org.digitalcampus.oppia.model.Tag;
+import org.digitalcampus.oppia.task.APIRequestTask;
+import org.digitalcampus.oppia.task.GetEssayAnswerStatusTask;
 import org.digitalcampus.oppia.task.InstallDownloadedCoursesTask;
 import org.digitalcampus.oppia.task.Payload;
 import org.digitalcampus.oppia.task.PostInstallTask;
 import org.digitalcampus.oppia.task.UpgradeManagerTask;
 import org.digitalcampus.oppia.utils.storage.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import java.io.File;
-import java.util.ArrayList;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.TextView;
+
+import com.bugsense.trace.BugSenseHandler;
 
 public class StartUpActivity extends Activity implements UpgradeListener, PostInstallListener, InstallCourseListener{
 
 	public final static String TAG = StartUpActivity.class.getSimpleName();
 	private TextView tvProgress;
 	private SharedPreferences prefs;
+	private ProgressDialog progressDialog;
+	private String url;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,11 +88,38 @@ public class StartUpActivity extends Activity implements UpgradeListener, PostIn
 		ArrayList<Object> data = new ArrayList<Object>();
  		Payload p = new Payload(data);
 		umt.execute(p);
+		
+		getEssayQuestionStatus();
  		
 	}
 	
 	
-    private void updateProgress(String text){
+    private void getEssayQuestionStatus() {
+		
+    	
+    	//?format=json&quiz=36&user=1&username=admin&api_key=fc548cfafae206822431649e50d7ad68
+    	
+    	
+    	int attempt_status = prefs.getInt("ESSAY_QUESTION_ATTEMPT_STATUS",0);
+    	if(attempt_status==1){
+    	String username = prefs.getString(PrefsActivity.PREF_USER_NAME, "anon");
+    	String apikey = prefs.getString(PrefsActivity.PREF_API_KEY,"");
+    	
+    	int quiz_id = prefs.getInt("ACTIVITY_ESSAY_QUESTION_QUIZ_ID",-1);
+    	String user_id_combine =  prefs.getString("user_id","");
+    	String[] splitForuserId = user_id_combine.split("/");
+    	String user_id = splitForuserId[4];
+    	
+    	String url_to_hit = this.getString(R.string.prefServerDefault) + MobileLearning.GET_ESSAY_ANSWER+"?format=json&quiz="+quiz_id+"&user="+user_id+"&username="+username+"&api_key="+apikey;
+    	Log.e("url_to_hit",url_to_hit);
+    	if(isOnline())
+    	new JSONAsyncTask().execute(url_to_hit);
+    	}
+		
+	}
+
+
+	private void updateProgress(String text){
     	if(tvProgress != null){
     		tvProgress.setText(text);
     	}
@@ -159,5 +208,109 @@ public class StartUpActivity extends Activity implements UpgradeListener, PostIn
 
 	public void installProgressUpdate(DownloadProgress dp) {
 		this.updateProgress(dp.getMessage());
+	}
+	
+	
+	
+	
+	/*
+	 * 
+	 * 
+	 */
+	class JSONAsyncTask extends AsyncTask<String, Void, Boolean> {
+
+
+		@Override
+		protected void onPreExecute() {
+		    super.onPreExecute();
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... urls) {
+		    try {
+
+		        //------------------>>
+		        HttpGet httppost = new HttpGet(urls[0]);
+		        HttpClient httpclient = new DefaultHttpClient();
+		        HttpResponse response = httpclient.execute(httppost);
+
+		        // StatusLine stat = response.getStatusLine();
+		        int status = response.getStatusLine().getStatusCode();
+
+		        if (status == 200 || status == 201) {
+		            HttpEntity entity = response.getEntity();
+		            String data = EntityUtils.toString(entity);
+
+		            Log.d("response",data);
+		            
+		            JSONObject jsonObjMain = new JSONObject(data);
+		            
+		            JSONArray arrayObjects = jsonObjMain.getJSONArray("objects");
+		            
+					JSONObject lastArrayObjects = arrayObjects.getJSONObject(arrayObjects.length()-1);
+					
+					String scoreMain = lastArrayObjects.getString("score");
+					
+					String quizIdCombine  = lastArrayObjects.getString("quiz");
+					
+					String[] splitForuserId = quizIdCombine.split("/");
+					
+			    	String quizId = splitForuserId[4];
+					
+					JSONArray arrayObjectResponse = lastArrayObjects.getJSONArray("responses");
+					
+					
+					JSONObject arrayObjectResponseObject = arrayObjectResponse.getJSONObject(0);
+					
+					String feedback = arrayObjectResponseObject.getString("feedback");
+					
+					String score = arrayObjectResponseObject.getString("score");
+					
+					String userresponse = arrayObjectResponseObject.getString("text");
+					
+					Log.e("scoreMain",scoreMain);
+					Log.e("feedback",feedback);
+					Log.e("score",score);
+					Log.e("userresponse",userresponse);
+					Log.e("quizId",quizId);
+					
+					
+					
+					prefs.edit().putString("QUIZ_ID", quizId).commit();
+					prefs.edit().putString("USER_RESPONSE", userresponse).commit();
+					prefs.edit().putString("MAIN_SCORE", scoreMain).commit();
+					prefs.edit().putString("FEEDBACK", feedback).commit();
+					prefs.edit().putString("SCORE", score).commit();
+
+
+		            return true;
+		        }
+
+
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    } catch (JSONException e) {
+
+		        e.printStackTrace();
+		    }
+		    return false;
+		}
+
+		protected void onPostExecute(Boolean result) {
+			
+			
+			
+			 
+		}
+	}
+	
+	
+	
+	public boolean isOnline() {
+	    ConnectivityManager cm =
+	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    return netInfo != null && netInfo.isConnectedOrConnecting();
 	}
 }
