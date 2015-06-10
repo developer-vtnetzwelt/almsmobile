@@ -41,6 +41,7 @@ public class EssayWidget extends TextInputQuizWidget{
 	@Override
 	public void setQuestionResponses(List<Response> responses, List<String> currentAnswers) {
 		EditText et = (EditText) view.findViewById(R.id.responsetext);
+		et.setSingleLine(false);
 		Iterator<String> itr = currentAnswers.iterator(); 
 		while(itr.hasNext()) {
 		    String answer = itr.next(); 
