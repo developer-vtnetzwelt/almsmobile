@@ -16,7 +16,7 @@
             android:layout_height="48dp"
             android:layout_margin="10dp"
             android:contentDescription="@string/app_logo_alt"
-            android:src="@drawable/dc_logo" />
+            android:src="@drawable/alms_mobile_logo" />
 
         <TextView
             android:id="@+id/course_title"

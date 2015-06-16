@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
     
-    <org.digitalcampus.oppia.application.ScheduleReminders
+    <org.hopegames.mobile.application.ScheduleReminders
         android:id="@+id/schedule_reminders"
         android:background="@drawable/message_background"
         android:layout_width="fill_parent" 

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">OppiaMobile</string>
-    <string name="app_logo_alt">Digital Campus Logo</string>
+    <string name="app_name">ALMS Mobile</string>
+    <string name="app_logo_alt">ALMS Mobile</string>
     
     <string name="menu_download">Gestionar cursos</string>
     <string name="menu_language">Cambiar idioma</string>
@@ -15,13 +15,12 @@
     <string name="menu_search">Búsqueda</string>
     <string name="menu_stop_read_aloud">Stop reading</string>
     
-    <string name="service_tracker">OppiaMobile buscador de servicio</string>
+    <string name="service_tracker">ALMS Mobile buscador de servicio</string>
     
-    <string name="fragment_welcome_title">Welcome to OppiaMobile</string>
-    <string name="fragment_welcome_desc">OppiaMobile is a mobile learning platform for delivering learning content, video and quizzes.\n\n\'Oppia\' means \'to learn\' in Finnish</string>
-    <string name="fragment_welcome_login_info">To get started with OppiaMobile, you will need to register or login.</string>
-    <string name="fragment_welcome_privacy">We take your privacy seriously, <a href="http://digital-campus.org/privacy/">find out more about Digital Campus\'s privacy policy</a></string>
-    
+    <string name="fragment_welcome_title">Welcome to ALMS Mobile</string>
+    <string name="fragment_welcome_desc">ALMS Mobile is a mobile learning platform for delivering learning content, video and quizzes.\n\n\'Oppia\' means \'to learn\' in Finnish</string>
+    <string name="fragment_welcome_login_info">To get started with ALMS Mobile, you will need to register or login.</string>
+       <string name="fragment_welcome_privacy">We take your privacy seriously, <a href="http://almsmobile.hopegames.org/">find out more about hopegames privacy policy</a></string>
     <string name="tab_title_about">Acerca de</string>
     <string name="tab_title_badges">Badges</string>
     <string name="tab_title_login">Login</string>
@@ -45,7 +44,7 @@
     <string name="title_course_meta">Acerca de</string>
     <string name="title_scorecard">Scorecard</string>
     <string name="title_search">Búsqueda</string>
-    <string name="title_welcome">OppiaMobile</string>
+    <string name="title_welcome">ALMS Mobile</string>
         
     <string name="widget_feedback_submit">Submit</string>
     <string name="widget_feedback_submit_title">Thank you for submitting your feedback.</string>
