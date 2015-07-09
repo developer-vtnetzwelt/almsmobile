@@ -202,6 +202,8 @@ if(courseListAdapter==null){
 		}		
 	}
 	
+	
+	
 	private void scanMedia() {
 		long now = System.currentTimeMillis()/1000;
 		if (prefs.getLong(PrefsActivity.PREF_LAST_MEDIA_SCAN, 0)+3600 > now) {
