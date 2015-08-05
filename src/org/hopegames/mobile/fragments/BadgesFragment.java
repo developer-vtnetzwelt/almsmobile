@@ -26,6 +26,7 @@ import org.hopegames.mobile.listener.APIRequestListener;
 import org.hopegames.mobile.model.Badges;
 import org.hopegames.mobile.task.APIRequestTask;
 import org.hopegames.mobile.task.Payload;
+import org.hopegames.mobile.utils.ConnectionUtils;
 import org.hopegames.mobile.utils.UIUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,11 +76,13 @@ public class BadgesFragment extends Fragment implements APIRequestListener {
 		getBadges();
 	}
 	
-	private void getBadges(){		
+	private void getBadges(){	
+		if(!ConnectionUtils.isOffLineMode(super.getActivity())){
 		APIRequestTask task = new APIRequestTask(super.getActivity());
 		Payload p = new Payload(MobileLearning.SERVER_AWARDS_PATH);
 		task.setAPIRequestListener(this);
 		task.execute(p);
+		}
 	}
 
 	private void refreshBadgesList() {

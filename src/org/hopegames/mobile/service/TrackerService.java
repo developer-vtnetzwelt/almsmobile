@@ -31,6 +31,7 @@ import org.hopegames.mobile.task.APIRequestTask;
 import org.hopegames.mobile.task.Payload;
 import org.hopegames.mobile.task.SubmitQuizTask;
 import org.hopegames.mobile.task.SubmitTrackerMultipleTask;
+import org.hopegames.mobile.utils.ConnectionUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -87,11 +88,12 @@ public class TrackerService extends Service implements APIRequestListener {
 			long lastRun = prefs.getLong("lastCourseUpdateCheck", 0);
 			long now = System.currentTimeMillis()/1000;
 			if((lastRun + (3600*12)) < now){
+				if(!ConnectionUtils.isOffLineMode(this)){
 				APIRequestTask task = new APIRequestTask(this);
 				p = new Payload(MobileLearning.SERVER_COURSES_PATH);
 				task.setAPIRequestListener(this);
 				task.execute(p);
-				
+				}
 				Editor editor = prefs.edit();
 				editor.putLong("lastCourseUpdateCheck", now);
 				editor.commit();
@@ -101,8 +103,10 @@ public class TrackerService extends Service implements APIRequestListener {
 			MobileLearning app = (MobileLearning) this.getApplication();
 			if(app.omSubmitTrackerMultipleTask == null){
 				Log.d(TAG,"Sumitting trackers multiple task");
+				if(!ConnectionUtils.isOffLineMode(this)){
 				app.omSubmitTrackerMultipleTask = new SubmitTrackerMultipleTask(this);
 				app.omSubmitTrackerMultipleTask.execute();
+				}
 			}
 			
 			// send quiz results
@@ -115,8 +119,10 @@ public class TrackerService extends Service implements APIRequestListener {
 		
 				if (unsent.size() > 0){
 					p = new Payload(unsent);
+					if(!ConnectionUtils.isOffLineMode(this)){
 					app.omSubmitQuizTask = new SubmitQuizTask(this);
 					app.omSubmitQuizTask.execute(p);
+					}
 				}
 			}
 

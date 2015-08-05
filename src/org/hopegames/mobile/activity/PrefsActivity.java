@@ -24,6 +24,7 @@ import org.hopegames.mobile.learning.R;
 import org.hopegames.mobile.listener.MoveStorageListener;
 import org.hopegames.mobile.task.ChangeStorageOptionTask;
 import org.hopegames.mobile.task.Payload;
+import org.hopegames.mobile.utils.ConnectionUtils;
 import org.hopegames.mobile.utils.UIUtils;
 import org.hopegames.mobile.utils.storage.FileUtils;
 
@@ -64,7 +65,7 @@ public class PrefsActivity extends AppActivity implements SharedPreferences.OnSh
 	public static final String PREF_SERVER_TIMEOUT_RESP = "prefServerTimeoutResponse";
 	public static final String PREF_METADATA = "prefMetadata";
 	public static final String PREF_BACKGROUND_DATA_CONNECT = "prefBackgroundDataConnect";
-
+	public static final String PREF_OFFLINE_MODE="prefOfflineMode";
 	public static final String PREF_LOGOUT_ENABLED = "prefLogoutEnabled";
 	public static final String PREF_DELETE_COURSE_ENABLED = "prefDeleteCourseEnabled";
 	public static final String PREF_DOWNLOAD_VIA_CELLULAR_ENABLED = "prefDownloadViaCellularEnabled";
@@ -148,6 +149,9 @@ public class PrefsActivity extends AppActivity implements SharedPreferences.OnSh
                 data.add(storageOption);
                 if (path != null){ data.add(path); }
                 Payload p = new Payload(data);
+                
+                if(!ConnectionUtils.isOffLineMode(this)){
+                
                 ChangeStorageOptionTask changeStorageTask = new ChangeStorageOptionTask(PrefsActivity.this.getApplicationContext());
                 changeStorageTask.setMoveStorageListener(this);
 
@@ -158,6 +162,7 @@ public class PrefsActivity extends AppActivity implements SharedPreferences.OnSh
                 pDialog.show();
 
                 changeStorageTask.execute(p);
+                }
             }
         }
     }

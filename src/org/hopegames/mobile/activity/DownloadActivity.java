@@ -38,6 +38,7 @@ import org.hopegames.mobile.task.DownloadCourseTask;
 import org.hopegames.mobile.task.DownloadTasksController;
 import org.hopegames.mobile.task.Payload;
 import org.hopegames.mobile.task.ScheduleUpdateTask;
+import org.hopegames.mobile.utils.ConnectionUtils;
 import org.hopegames.mobile.utils.UIUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -105,7 +106,9 @@ public class DownloadActivity extends AppActivity implements APIRequestListener,
 		}
 
         if (tasksController == null){
+        	if(!ConnectionUtils.isOffLineMode(DownloadActivity.this)){
             tasksController = new DownloadTasksController(this, prefs);
+        	}
         }
         tasksController.setOnDownloadCompleteListener(this);
         tasksController.setCtx(this);
@@ -160,6 +163,7 @@ public class DownloadActivity extends AppActivity implements APIRequestListener,
 	
 	private void getCourseList() {
 		// show progress dialog
+		if(!ConnectionUtils.isOffLineMode(this)){
 		progressDialog = new ProgressDialog(this);
 		progressDialog.setTitle(R.string.loading);
 		progressDialog.setMessage(getString(R.string.loading));
@@ -170,6 +174,7 @@ public class DownloadActivity extends AppActivity implements APIRequestListener,
 		Payload p = new Payload(url);
 		task.setAPIRequestListener(this);
 		task.execute(p);
+		}
 	}
 
 	public void refreshCourseList() {
@@ -283,18 +288,30 @@ public class DownloadActivity extends AppActivity implements APIRequestListener,
                 Payload p = new Payload(data);
 
                 if(!courseSelected.isInstalled() || courseSelected.isToUpdate()){
+                	if(!ConnectionUtils.isOffLineMode(DownloadActivity.this)){
                     tasksController.setTaskInProgress(true);
                     tasksController.showDialog();
                     DownloadCourseTask downloadTask = new DownloadCourseTask(DownloadActivity.this);
                     downloadTask.setInstallerListener(tasksController);
                     downloadTask.execute(p);
+                	}
+                	else{
+                		UIUtils.showAlert(DownloadActivity.this, R.string.error, R.string.prefOfflineMode, new Callable<Boolean>() {
+            				public Boolean call() throws Exception {
+            					DownloadActivity.this.finish();
+            					return true;
+            				}
+                	});
+                	}
                 }
                 else if(courseSelected.isToUpdateSchedule()){
+                	if(!ConnectionUtils.isOffLineMode(DownloadActivity.this)){
                     tasksController.setTaskInProgress(true);
                     tasksController.showDialog();
                     ScheduleUpdateTask updateTask = new ScheduleUpdateTask(DownloadActivity.this);
                     updateTask.setUpdateListener(tasksController);
                     updateTask.execute(p);
+                	}
                 }
             }
         }

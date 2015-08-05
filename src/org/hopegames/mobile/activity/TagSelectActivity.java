@@ -27,6 +27,7 @@ import org.hopegames.mobile.listener.APIRequestListener;
 import org.hopegames.mobile.model.Tag;
 import org.hopegames.mobile.task.APIRequestTask;
 import org.hopegames.mobile.task.Payload;
+import org.hopegames.mobile.utils.ConnectionUtils;
 import org.hopegames.mobile.utils.UIUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -123,6 +124,7 @@ public class TagSelectActivity extends AppActivity implements APIRequestListener
 	
 	private void getTagList() {
 		// show progress dialog
+		if(!ConnectionUtils.isOffLineMode(this)){
 		pDialog = new ProgressDialog(this);
 		pDialog.setTitle(R.string.loading);
 		pDialog.setMessage(getString(R.string.loading));
@@ -133,6 +135,14 @@ public class TagSelectActivity extends AppActivity implements APIRequestListener
 		Payload p = new Payload(MobileLearning.SERVER_TAG_PATH);
 		task.setAPIRequestListener(this);
 		task.execute(p);
+		}else{
+			UIUtils.showAlert(this, R.string.error, R.string.off_line_mode_msg, new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					TagSelectActivity.this.finish();
+					return true;
+				}
+			});
+		}
 	}
 
 	public void refreshTagList() {

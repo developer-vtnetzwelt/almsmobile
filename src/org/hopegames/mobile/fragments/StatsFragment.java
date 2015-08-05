@@ -24,6 +24,7 @@ import org.hopegames.mobile.application.MobileLearning;
 import org.hopegames.mobile.learning.R;
 import org.hopegames.mobile.listener.TrackerServiceListener;
 import org.hopegames.mobile.task.SubmitTrackerMultipleTask;
+import org.hopegames.mobile.utils.ConnectionUtils;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -99,9 +100,11 @@ public class StatsFragment extends Fragment implements TrackerServiceListener {
 		MobileLearning app = (MobileLearning) super.getActivity().getApplication();
 		if(app.omSubmitTrackerMultipleTask == null){
 			Log.d(TAG,"Sumitting trackers multiple task");
+			if(!ConnectionUtils.isOffLineMode(super.getActivity())){
 			app.omSubmitTrackerMultipleTask = new SubmitTrackerMultipleTask(this.getActivity());
 			app.omSubmitTrackerMultipleTask.setTrackerServiceListener(this);
 			app.omSubmitTrackerMultipleTask.execute();
+			}
 		}
 	}
 	

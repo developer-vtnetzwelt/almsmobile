@@ -26,6 +26,7 @@ import org.hopegames.mobile.listener.APIRequestListener;
 import org.hopegames.mobile.model.Points;
 import org.hopegames.mobile.task.APIRequestTask;
 import org.hopegames.mobile.task.Payload;
+import org.hopegames.mobile.utils.ConnectionUtils;
 import org.hopegames.mobile.utils.UIUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,11 +75,13 @@ public class PointsFragment extends Fragment implements APIRequestListener {
 		getPoints();
 	}
 	
-	private void getPoints(){		
+	private void getPoints(){
+		if(!ConnectionUtils.isOffLineMode(super.getActivity())){
 		APIRequestTask task = new APIRequestTask(super.getActivity());
 		Payload p = new Payload(MobileLearning.SERVER_POINTS_PATH);
 		task.setAPIRequestListener(this);
 		task.execute(p);
+		}
 	}
 
 	private void refreshPointsList() {

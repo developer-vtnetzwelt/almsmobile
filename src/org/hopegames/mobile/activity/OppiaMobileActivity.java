@@ -33,6 +33,7 @@ import org.hopegames.mobile.model.Course;
 import org.hopegames.mobile.model.Lang;
 import org.hopegames.mobile.task.Payload;
 import org.hopegames.mobile.task.ScanMediaTask;
+import org.hopegames.mobile.utils.ConnectionUtils;
 import org.hopegames.mobile.utils.UIUtils;
 import org.hopegames.mobile.utils.storage.FileUtils;
 
@@ -133,6 +134,12 @@ public class OppiaMobileActivity extends AppActivity implements OnSharedPreferen
 	public void onResume(){
 		super.onResume();
 		this.updateReminders();
+		
+		if(ConnectionUtils.isOffLineMode(this)){
+			Toast.makeText(this, getResources().getString(R.string.off_line_mode_msg), Toast.LENGTH_LONG).show();
+		}
+		
+		
 	}
 	
 	@Override
@@ -206,15 +213,23 @@ if(courseListAdapter==null){
 	
 	private void scanMedia() {
 		long now = System.currentTimeMillis()/1000;
+		try{
+		if(prefs!=null){
+			
 		if (prefs.getLong(PrefsActivity.PREF_LAST_MEDIA_SCAN, 0)+3600 > now) {
 			LinearLayout ll = (LinearLayout) this.findViewById(R.id.home_messages);
 			ll.setVisibility(View.GONE);
 			return;
 		}
+		}
 		ScanMediaTask task = new ScanMediaTask(this);
 		Payload p = new Payload(this.courses);
 		task.setScanMediaListener(this);
 		task.execute(p);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	@Override
