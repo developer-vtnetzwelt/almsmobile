@@ -185,8 +185,12 @@ public class CourseActivity extends FragmentActivity implements ActionBar.TabLis
 		Bundle tb = new Bundle();
 		Intent i;
 		int itemId = item.getItemId();
+		
 		if (itemId == R.id.menu_language) {
 			createLanguageDialog();
+			return true;
+		}else if(itemId == R.id.menu_message){
+			showMessageActivity();
 			return true;
 		} else if (itemId == R.id.menu_help) {
 			i = new Intent(this, AboutActivity.class);
@@ -222,7 +226,12 @@ public class CourseActivity extends FragmentActivity implements ActionBar.TabLis
 		}
 	}
 
-    private void loadActivities(){
+    private void showMessageActivity() {
+    	startActivity(new Intent(CourseActivity.this,ActivityMessageMain.class));
+		
+	}
+
+	private void loadActivities(){
         String currentLang = prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale.getDefault().getLanguage());
         String actionBarTitle = section.getTitle(currentLang);
         if (actionBarTitle != null) {

@@ -59,12 +59,16 @@ public class MobileLearning extends Application {
 	public static final String SERVER_AWARDS_PATH = OPPIAMOBILE_API + "awards/";
 	public static final String SERVER_COURSES_NAME = "courses";
 	
+	public static final String SERVER_MOODLE_MSG_LOGIN_NAME = "login/token.php";
+	public static final String SERVER_MOODLE_COMMON_URL_NAME = "webservice/rest/server.php?moodlewsrestformat=json";
+	
 	
 	public static final String GET_ESSAY_ANSWER = OPPIAMOBILE_API+"quizattempt/";
 	
 	
 	// general other settings
-	public static final String BUGSENSE_API_KEY = "53012c2c";
+	//public static final String BUGSENSE_API_KEY = "53012c2c";
+	public static final String BUGSENSE_API_KEY = "";
 	public static final int DOWNLOAD_COURSES_DISPLAY = 1; //this no of courses must be displayed for the 'download more courses' option to disappear
 	public static final int PASSWORD_MIN_LENGTH = 6;
 	public static final int PAGE_READ_TIME = 3;

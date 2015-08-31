@@ -51,7 +51,9 @@ public class PreferencesFragment extends PreferenceFragment {
                 getString(R.string.about_logged_in, username.getText()) );
 
         EditTextPreference server = (EditTextPreference) findPreference(PrefsActivity.PREF_SERVER);
+        EditTextPreference moodleServer = (EditTextPreference) findPreference(PrefsActivity.PREF_MOODLE_SERVER);
         server.setSummary(server.getText());
+        moodleServer.setSummary(moodleServer.getText());
 
     }
 

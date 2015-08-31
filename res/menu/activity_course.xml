@@ -1,6 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" 
     xmlns:oppiamobile="http://schemas.android.com/apk/res-auto" >
-
+<item
+        android:id="@+id/menu_message"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="@string/menu_messages"/>
     <item
         android:id="@+id/menu_scorecard"
         android:icon="@drawable/ic_menu_start_conversation"

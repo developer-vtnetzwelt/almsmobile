@@ -283,8 +283,15 @@ if(courseListAdapter==null){
 		} else if (itemId == R.id.menu_logout) {
 			logout();
 			return true;
+		}else if(itemId == R.id.menu_message){
+			showMessageActivity();
 		}
 		return true;
+	}
+
+	private void showMessageActivity() {
+		startActivity(new Intent(OppiaMobileActivity.this,ActivityMessageMain.class));
+		
 	}
 
 	private void createLanguageDialog() {

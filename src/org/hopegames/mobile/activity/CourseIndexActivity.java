@@ -192,7 +192,10 @@ public class CourseIndexActivity extends AppActivity implements OnSharedPreferen
 		if (itemId == R.id.menu_language) {
 			createLanguageDialog();
 			return true;
-		} else if (itemId == R.id.menu_help) {
+		} else if(itemId == R.id.menu_message){
+			showMessageActivity();
+			return true;
+		}else if (itemId == R.id.menu_help) {
 			i = new Intent(this, AboutActivity.class);
 			tb.putSerializable(AboutActivity.TAB_ACTIVE, AboutActivity.TAB_HELP);
 			i.putExtras(tb);
@@ -226,6 +229,10 @@ public class CourseIndexActivity extends AppActivity implements OnSharedPreferen
 			}
 		});
 	}
+	 private void showMessageActivity() {
+	    	startActivity(new Intent(CourseIndexActivity.this,ActivityMessageMain.class));
+			
+		}
 
 	private boolean isBaselineCompleted() {
 		ArrayList<Activity> baselineActs = cxr.getBaselineActivities(course.getCourseId());

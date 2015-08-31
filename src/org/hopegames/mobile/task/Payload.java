@@ -18,6 +18,9 @@
 package org.hopegames.mobile.task;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import org.hopegames.mobile.task.MessageModel.UserMessageMain;
 
 public class Payload {
 	
@@ -26,6 +29,81 @@ public class Payload {
 	private String resultResponse;
 	private ArrayList<Object> responseData = new ArrayList<Object>();
 	private String url;
+	
+	private String token;
+	private String userId;
+	
+	private UserMessageMain[] messages;
+	
+	private int msgid;
+	
+	
+	private List<Courses> courses;
+	
+	private List<CourseParticipant> courseparticipant;
+	
+	
+	
+	
+	public List<CourseParticipant> getCourseparticipant() {
+		return courseparticipant;
+	}
+
+	public void setCourseparticipant(List<CourseParticipant> courseparticipant) {
+		this.courseparticipant = courseparticipant;
+	}
+
+	private String fromWhich="";
+	
+
+	public String getFromWhich() {
+		return fromWhich;
+	}
+
+	public void setFromWhich(String fromWhich) {
+		this.fromWhich = fromWhich;
+	}
+
+	public List<Courses> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Courses> courses) {
+		this.courses = courses;
+	}
+
+	public int getMsgid() {
+		return msgid;
+	}
+
+	public void setMsgid(int msgid) {
+		this.msgid = msgid;
+	}
+
+	public UserMessageMain[] getMessages() {
+		return messages;
+	}
+
+	public void setMessages(UserMessageMain[] messages) {
+		this.messages = messages;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	public Payload(){
 		

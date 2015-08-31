@@ -1162,4 +1162,25 @@ public class DbHelper extends SQLiteOpenHelper {
 	    	return true;
 	    }
 	}
+	
+	
+	public ArrayList<User> getUsersEmailPass(){
+		Cursor c = db.query(USER_TABLE, null, null, null, null, null, null);
+		c.moveToFirst();
+		
+		ArrayList<User> users = new ArrayList<User>();
+		while (c.isAfterLast() == false) {
+			User u = new User();
+			u.setUserid(c.getInt(c.getColumnIndex(USER_C_ID)));
+			
+			u.setPassword(c.getString(c.getColumnIndex(USER_C_PASSWORD)));
+			users.add(u);
+			c.moveToNext();
+		}
+		c.close();
+		return users;
+	}
+	
+	
+	
 }

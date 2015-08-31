@@ -21,6 +21,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import android.R.string;
+
 public class User {
 
 	private int userid;
@@ -39,7 +41,85 @@ public class User {
 	private boolean badgingEnabled = true;
 	private int points = 0;
 	private int badges = 0;
+	private String token;
+	private String msgUserId;
+	private String msgUserIdFrom;
+	private String msgUserIdTo;
+	private String msgUserMsg;
+	private String read="0";
+	private int limitnum;
+	private String fromWhichHit;
+	private int courseid;
+	private String swipe_0 = "0";
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	public String getSwipe_0() {
+		return swipe_0;
+	}
+	public void setSwipe_0(String swipe_0) {
+		this.swipe_0 = swipe_0;
+	}
+	public int getCourseid() {
+		return courseid;
+	}
+	public void setCourseid(int courseid) {
+		this.courseid = courseid;
+	}
+	public String getFromWhichHit() {
+		return fromWhichHit;
+	}
+	public void setFromWhichHit(String fromWhichHit) {
+		this.fromWhichHit = fromWhichHit;
+	}
+	public String getRead() {
+		return read;
+	}
+	public void setRead(String read) {
+		this.read = read;
+	}
+	public int getLimitnum() {
+		return limitnum;
+	}
+	public void setLimitnum(int limitnum) {
+		this.limitnum = limitnum;
+	}
+	public String getMsgUserMsg() {
+		return msgUserMsg;
+	}
+	public void setMsgUserMsg(String msgUserMsg) {
+		this.msgUserMsg = msgUserMsg;
+	}
+	public String getMsgUserIdFrom() {
+		return msgUserIdFrom;
+	}
+	public void setMsgUserIdFrom(String msgUserIdFrom) {
+		this.msgUserIdFrom = msgUserIdFrom;
+	}
+	public String getMsgUserIdTo() {
+		return msgUserIdTo;
+	}
+	public void setMsgUserIdTo(String msgUserIdTo) {
+		this.msgUserIdTo = msgUserIdTo;
+	}
+	public String getMsgUserId() {
+		return msgUserId;
+	}
+	public void setMsgUserId(String msgUserId) {
+		this.msgUserId = msgUserId;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
 	public String getUsername() {
 		return username;
 	}

@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">ALMS Mobile</string>
     <string name="prefServerDefault">http://almsmobile.hopegames.org/</string>
+    <string name="prefMoodleServerDefault">http://tmpmoodle.hopecybrary.org/</string>
     <string name="prefServerTimeoutConnectionDefault">60000</string>
     <string name="prefServerTimeoutResponseDefault">60000</string>
     

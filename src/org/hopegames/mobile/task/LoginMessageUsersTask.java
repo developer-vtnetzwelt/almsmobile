@@ -1,20 +1,3 @@
-/* 
- * This file is part of OppiaMobile - https://digital-campus.org/
- * 
- * OppiaMobile is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * OppiaMobile is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with OppiaMobile. If not, see <http://www.gnu.org/licenses/>.
- */
-
 package org.hopegames.mobile.task;
 
 import java.io.BufferedReader;
@@ -22,22 +5,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
+import org.apache.http.message.BasicNameValuePair;
 import org.hopegames.mobile.activity.PrefsActivity;
-import org.hopegames.mobile.application.DatabaseManager;
-import org.hopegames.mobile.application.DbHelper;
 import org.hopegames.mobile.application.MobileLearning;
 import org.hopegames.mobile.learning.R;
 import org.hopegames.mobile.listener.SubmitListener;
 import org.hopegames.mobile.model.User;
+import org.hopegames.mobile.task.MessageModel.UserMessageMain;
 import org.hopegames.mobile.utils.HTTPConnectionUtils;
-import org.hopegames.mobile.utils.MetaDataUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,22 +30,19 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 import com.bugsense.trace.BugSenseHandler;
+import com.google.gson.Gson;
 
-public class LoginTask extends AsyncTask<Payload, Object, Payload> {
+public class LoginMessageUsersTask extends AsyncTask<Payload, Object, Payload> {
 
 	public static final String TAG = LoginTask.class.getSimpleName();
 
 	private Context ctx;
 	private SharedPreferences prefs;
-	private SharedPreferences prefsMsg;
 	private SubmitListener mStateListener;
-	private String userSign;
-	private String userPass;
 	
-	public LoginTask(Context c) {
+	public LoginMessageUsersTask(Context c) {
 		this.ctx = c;
 		prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-		prefsMsg = c.getSharedPreferences("MyMsgPref", c.MODE_PRIVATE);
 	}
 
 	@Override
@@ -72,7 +52,9 @@ public class LoginTask extends AsyncTask<Payload, Object, Payload> {
 		User u = (User) payload.getData().get(0);
 		HTTPConnectionUtils client = new HTTPConnectionUtils(ctx);
 
-		String url = prefs.getString(PrefsActivity.PREF_SERVER, ctx.getString(R.string.prefServerDefault)) + MobileLearning.LOGIN_PATH;
+		//String url = "http://tmpmoodle.hopecybrary.org/webservice/rest/server.php?moodlewsrestformat=json";
+		String url = prefs.getString(PrefsActivity.PREF_MOODLE_SERVER, ctx.getString(R.string.prefMoodleServerDefault)) + MobileLearning.SERVER_MOODLE_COMMON_URL_NAME;
+
 		JSONObject json = new JSONObject();
 		
 		HttpPost httpPost = new HttpPost(url);
@@ -80,13 +62,18 @@ public class LoginTask extends AsyncTask<Payload, Object, Payload> {
 			// update progress dialog
 			publishProgress(ctx.getString(R.string.login_process));
 			// add post params
-			json.put("username", u.getUsername());
-            json.put("password", u.getPassword());
-            userSign= u.getUsername();
-            userPass =u.getPassword();
-            StringEntity se = new StringEntity( json.toString(),"utf8");
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            httpPost.setEntity(se);
+			List<NameValuePair> paramsPost = new ArrayList<NameValuePair>(2);
+			paramsPost.add(new BasicNameValuePair("limitfrom","0"));
+			paramsPost.add(new BasicNameValuePair("limitnum", "50"));
+			paramsPost.add(new BasicNameValuePair("moodlewssettingfilter", "true"));
+			paramsPost.add(new BasicNameValuePair("newestfirst","1"));
+			paramsPost.add(new BasicNameValuePair("read", "0"));
+			paramsPost.add(new BasicNameValuePair("type", "conversations"));
+			paramsPost.add(new BasicNameValuePair("useridfrom", u.getSwipe_0()));
+			paramsPost.add(new BasicNameValuePair("useridto",""+u.getMsgUserId()));
+			paramsPost.add(new BasicNameValuePair("wsfunction", "local_mobile_core_message_get_messages"));
+			paramsPost.add(new BasicNameValuePair("wstoken", u.getToken()));
+			httpPost.setEntity(new UrlEncodedFormEntity(paramsPost, "UTF-8"));
 
 			// make request
 			HttpResponse response = client.execute(httpPost);
@@ -107,45 +94,12 @@ public class LoginTask extends AsyncTask<Payload, Object, Payload> {
 					payload.setResult(false);
 					payload.setResultResponse(ctx.getString(R.string.error_login));
 					break;
-				case 201: // logged in
-					JSONObject jsonResp = new JSONObject(responseStr);
-					u.setApiKey(jsonResp.getString("api_key"));
-					u.setPassword(u.getPassword());
-					u.setPasswordEncrypted();
-					u.setFirstname(jsonResp.getString("first_name"));
-					u.setLastname(jsonResp.getString("last_name"));
-					prefs.edit().putString("user_id", jsonResp.getString("resource_uri")).commit();
-					
-					prefsMsg.edit().putString("user_signin", userSign).commit();
-					prefsMsg.edit().putString("user_pass", userPass).commit();
-					
-					
-					try {
-						u.setPoints(jsonResp.getInt("points"));
-						u.setBadges(jsonResp.getInt("badges"));
-					} catch (JSONException e){
-						u.setPoints(0);
-						u.setBadges(0);
-					}
-					try {
-						u.setScoringEnabled(jsonResp.getBoolean("scoring"));
-						u.setBadgingEnabled(jsonResp.getBoolean("badging"));
-					} catch (JSONException e){
-						u.setScoringEnabled(true);
-						u.setBadgingEnabled(true);
-					}
-					try {
-						JSONObject metadata = jsonResp.getJSONObject("metadata");
-				        MetaDataUtils mu = new MetaDataUtils(ctx);
-				        mu.saveMetaData(metadata, prefs);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-					DbHelper db = new DbHelper(ctx);
-					db.addOrUpdateUser(u);
-					DatabaseManager.getInstance().closeDatabase();
-					payload.setResult(true);
-					payload.setResultResponse(ctx.getString(R.string.login_complete));
+				case 200: // authorised
+					JSONObject jsonResp1 = new JSONObject(responseStr);
+					payload.setResult(false);
+					Gson gson = new Gson();
+					payload = gson.fromJson(responseStr, Payload.class);
+				
 					break;
 				default:
 					payload.setResult(false);
@@ -188,3 +142,4 @@ public class LoginTask extends AsyncTask<Payload, Object, Payload> {
         }
     }
 }
+

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+<org.hopegames.mobile.utils.TabsView.SlidingTabLayout
+                    android:id="@+id/sliding_tabs"
+                    android_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    
+                      <FrameLayout
+                        android:id="@+id/frame_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ListView
+                            android:id="@+id/lst_messages"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:dividerHeight="1dp"
+                            android:listSelector="@null"></ListView>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_message_progress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:visibility="gone">
+
+                            <include
+                                android:id="@+id/vw_progress_message"
+                                layout="@layout/progresswheel" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <RelativeLayout
+                                android:id="@+id/rl_no_message"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/tv_no_message"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:gravity="center"
+                                    android:text="There is no message."
+                                    android:textColor="@android:color/black"
+                                    android:textSize="17sp" />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
+
+                    </FrameLayout>
+                    
+                        <FrameLayout
+                        android:id="@+id/frame_participent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        
+                        
+
+                        <ListView
+                            android:id="@+id/lst_participent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:dividerHeight="1dp"
+                            android:listSelector="@null"></ListView>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_participent_progress"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:visibility="gone">
+
+                            <include
+                                android:id="@+id/vw_progress_participent"
+                                layout="@layout/progresswheel" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <RelativeLayout
+                                android:id="@+id/rl_no_participent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:id="@+id/tv_no_participent"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:gravity="center"
+                                    android:text="There is no participent."
+                                    android:textColor="@android:color/black"
+                                    android:textSize="17sp" />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
+
+
+                    </FrameLayout>
+                    
+                    </android.support.v4.view.ViewPager>
+    
+</LinearLayout>
