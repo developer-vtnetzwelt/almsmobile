@@ -17,10 +17,8 @@
 
 package org.hopegames.mobile.task;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.preference.PreferenceManager;
+import java.io.File;
+import java.util.Locale;
 
 import org.hopegames.mobile.activity.PrefsActivity;
 import org.hopegames.mobile.application.DatabaseManager;
@@ -37,8 +35,10 @@ import org.hopegames.mobile.utils.CourseXMLReader;
 import org.hopegames.mobile.utils.SearchUtils;
 import org.hopegames.mobile.utils.storage.FileUtils;
 
-import java.io.File;
-import java.util.Locale;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
 public class InstallDownloadedCoursesTask extends AsyncTask<Payload, DownloadProgress, Payload>{
 	

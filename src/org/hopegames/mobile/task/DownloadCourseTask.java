@@ -17,14 +17,13 @@
 
 package org.hopegames.mobile.task;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
-import com.bugsense.trace.BugSenseHandler;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
+import java.net.URL;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.params.CoreProtocolPNames;
@@ -37,13 +36,14 @@ import org.hopegames.mobile.model.DownloadProgress;
 import org.hopegames.mobile.utils.HTTPConnectionUtils;
 import org.hopegames.mobile.utils.storage.FileUtils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
-import java.net.URL;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import com.bugsense.trace.BugSenseHandler;
 
 public class DownloadCourseTask extends AsyncTask<Payload, DownloadProgress, Payload>{
 

@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
 
-import org.hopegames.mobile.activity.PrefsActivity;
-import org.hopegames.mobile.learning.R;
 import org.digitalcampus.mobile.quiz.Quiz;
 import org.digitalcampus.mobile.quiz.model.Response;
+import org.hopegames.mobile.activity.PrefsActivity;
+import org.hopegames.mobile.learning.R;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

@@ -38,13 +38,13 @@ import org.hopegames.mobile.utils.HTTPConnectionUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.bugsense.trace.BugSenseHandler;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.bugsense.trace.BugSenseHandler;
 
 public class ResetTask extends AsyncTask<Payload, Object, Payload> {
 

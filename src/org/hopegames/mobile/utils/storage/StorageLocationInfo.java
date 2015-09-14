@@ -1,8 +1,8 @@
 package org.hopegames.mobile.utils.storage;
 
-import android.content.Context;
-
 import org.hopegames.mobile.learning.R;
+
+import android.content.Context;
 
 public class StorageLocationInfo {
 

@@ -17,12 +17,12 @@
 
 package org.hopegames.mobile.widgets.quiz;
 
+import org.hopegames.mobile.learning.R;
+
 import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-import org.hopegames.mobile.learning.R;
 
 
 public abstract class TextInputQuizWidget extends QuestionWidget {

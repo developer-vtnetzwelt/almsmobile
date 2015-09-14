@@ -17,6 +17,17 @@
 
 package org.hopegames.mobile.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import org.hopegames.mobile.adapter.ActivityPagerAdapter;
+import org.hopegames.mobile.fragments.AboutFragment;
+import org.hopegames.mobile.fragments.OppiaWebViewFragment;
+import org.hopegames.mobile.fragments.StatsFragment;
+import org.hopegames.mobile.learning.R;
+import org.hopegames.mobile.utils.storage.FileUtils;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.FragmentTransaction;
@@ -27,17 +38,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
-
-import org.hopegames.mobile.adapter.ActivityPagerAdapter;
-import org.hopegames.mobile.fragments.AboutFragment;
-import org.hopegames.mobile.fragments.OppiaWebViewFragment;
-import org.hopegames.mobile.fragments.StatsFragment;
-import org.hopegames.mobile.learning.R;
-import org.hopegames.mobile.utils.storage.FileUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class AboutActivity extends FragmentActivity implements ActionBar.TabListener {
 

@@ -22,8 +22,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
+import org.digitalcampus.mobile.quiz.InvalidQuizException;
+import org.digitalcampus.mobile.quiz.Quiz;
+import org.digitalcampus.mobile.quiz.model.QuizQuestion;
+import org.digitalcampus.mobile.quiz.model.questiontypes.Description;
+import org.digitalcampus.mobile.quiz.model.questiontypes.Essay;
+import org.digitalcampus.mobile.quiz.model.questiontypes.Matching;
+import org.digitalcampus.mobile.quiz.model.questiontypes.MultiChoice;
+import org.digitalcampus.mobile.quiz.model.questiontypes.MultiSelect;
+import org.digitalcampus.mobile.quiz.model.questiontypes.Numerical;
+import org.digitalcampus.mobile.quiz.model.questiontypes.ShortAnswer;
 import org.hopegames.mobile.activity.CourseActivity;
 import org.hopegames.mobile.activity.PrefsActivity;
 import org.hopegames.mobile.adapter.QuizFeedbackAdapter;
@@ -46,16 +55,6 @@ import org.hopegames.mobile.widgets.quiz.MultiSelectWidget;
 import org.hopegames.mobile.widgets.quiz.NumericalWidget;
 import org.hopegames.mobile.widgets.quiz.QuestionWidget;
 import org.hopegames.mobile.widgets.quiz.ShortAnswerWidget;
-import org.digitalcampus.mobile.quiz.InvalidQuizException;
-import org.digitalcampus.mobile.quiz.Quiz;
-import org.digitalcampus.mobile.quiz.model.QuizQuestion;
-import org.digitalcampus.mobile.quiz.model.questiontypes.Description;
-import org.digitalcampus.mobile.quiz.model.questiontypes.Essay;
-import org.digitalcampus.mobile.quiz.model.questiontypes.Matching;
-import org.digitalcampus.mobile.quiz.model.questiontypes.MultiChoice;
-import org.digitalcampus.mobile.quiz.model.questiontypes.MultiSelect;
-import org.digitalcampus.mobile.quiz.model.questiontypes.Numerical;
-import org.digitalcampus.mobile.quiz.model.questiontypes.ShortAnswer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,9 +62,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -316,10 +312,18 @@ public class QuizWidget extends WidgetFactory {
 			return;
 		}
 		qText.setVisibility(View.VISIBLE);
-		// convert in case has any html special chars
+		// convert in case has any html special chars\
 		qText.setText(Html.fromHtml(
 				q.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-						.getDefault().getLanguage()))).toString());
+						.getDefault().getLanguage())).toString().replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>")));
+		
+		/*
+		 * Replace extra spaces with /n and remove multiple /n into singe /n
+		 * 
+		 */
+		
+		String eliminateSpacesIntoSingleNewLine = qText.getText().toString().replaceAll("\n+", "\n\n");
+		qText.setText(eliminateSpacesIntoSingleNewLine);
 
 		if (q.getProp("image") == null) {
 			questionImage.setVisibility(View.GONE);
@@ -855,13 +859,29 @@ public class QuizWidget extends WidgetFactory {
 				if (!(q instanceof Description)) {
 					QuizFeedback qf = new QuizFeedback();
 					qf.setScore(q.getScoreAsPercent());
+					
+					/*
+					 * Replace extra spaces with /n and remove multiple /n into singe /n
+					 * 
+					 */
+					
 					qf.setQuestionText(q.getTitle(prefs.getString(
 							PrefsActivity.PREF_LANGUAGE, Locale.getDefault()
-									.getLanguage())));
+									.getLanguage()).toString().replace("&nbsp;", "<br>").replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>")));
+					String eliminateSpacesIntoSingleNewLine = qText.getText().toString().replaceAll("\n+", "\n\n");
+					qf.setQuestionText(eliminateSpacesIntoSingleNewLine);
 					qf.setUserResponse(q.getUserResponses());
+					
+					/*
+					 * Replace extra spaces with /n and remove multiple /n into singe /n
+					 * 
+					 */
+					
 					qf.setFeedbackText(q.getFeedback(prefs.getString(
 							PrefsActivity.PREF_LANGUAGE, Locale.getDefault()
-									.getLanguage())));
+									.getLanguage()).toString().replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>")));
+					String eliminateSpacesIntoSingleNewLine2 = qText.getText().toString().replaceAll("\n+", "\n\n");
+					qf.setFeedbackText(eliminateSpacesIntoSingleNewLine2);
 					quizFeedback.add(qf);
 				}
 			}
@@ -1004,7 +1024,7 @@ public class QuizWidget extends WidgetFactory {
 		try {
 			toRead = quiz.getCurrentQuestion().getTitle(
 					prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-							.getDefault().getLanguage()));
+							.getDefault().getLanguage())).replace("&nbsp;", "<br>").replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>");
 		} catch (InvalidQuizException e) {
 			e.printStackTrace();
 		}
@@ -1013,7 +1033,7 @@ public class QuizWidget extends WidgetFactory {
 
 	private float getPercent() {
 		quiz.mark(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-				.getDefault().getLanguage()));
+				.getDefault().getLanguage()).replace("&nbsp;", "<br>").replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>"));
 		float percent = quiz.getUserscore() * 100 / quiz.getMaxscore();
 		return percent;
 	}

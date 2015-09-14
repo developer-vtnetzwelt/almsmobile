@@ -4,34 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hopegames.mobile.adapter.MsgMemberListAdapter;
-import org.hopegames.mobile.application.DatabaseManager;
-import org.hopegames.mobile.application.DbHelper;
 import org.hopegames.mobile.learning.R;
 import org.hopegames.mobile.listener.SubmitListener;
-import org.hopegames.mobile.model.Course;
 import org.hopegames.mobile.model.User;
 import org.hopegames.mobile.task.LoginMessageTask;
 import org.hopegames.mobile.task.LoginMessageUIDTask;
 import org.hopegames.mobile.task.LoginMessageUsersTask;
-import org.hopegames.mobile.task.LoginTask;
 import org.hopegames.mobile.task.Payload;
 import org.hopegames.mobile.task.MessageModel.UserMessageMain;
 import org.hopegames.mobile.utils.ConnectionUtils;
 import org.hopegames.mobile.utils.UIUtils;
 
-import android.R.bool;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class ActivityMessageMain2 extends AppActivity implements SubmitListener {
 	private ProgressDialog pDialog;

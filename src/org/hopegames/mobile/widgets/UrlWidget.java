@@ -37,7 +37,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebSettings.PluginState;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
@@ -76,6 +75,7 @@ public class UrlWidget extends WidgetFactory {
 		if ((savedInstanceState != null) && (savedInstanceState.getSerializable("widget_config") != null)){
 			setWidgetConfig((HashMap<String, Object>) savedInstanceState.getSerializable("widget_config"));
 		}
+
 		return vv;
 	}
 
@@ -93,15 +93,18 @@ public class UrlWidget extends WidgetFactory {
 			descTV.setVisibility(View.GONE);
 		}
 		
+		
 		WebView wv = (WebView) getView().findViewById(R.id.widget_url_webview);
 		int defaultFontSize = Integer.parseInt(prefs.getString(PrefsActivity.PREF_TEXT_SIZE, "16"));
 		wv.getSettings().setDefaultFontSize(defaultFontSize);
 		wv.getSettings().setJavaScriptEnabled(true);
+		wv.getSettings().setDomStorageEnabled(true);
 		wv.setWebViewClient(new WebViewClient() {
 	        @Override
 	        public boolean shouldOverrideUrlLoading(WebView view, String url)
 	        {
-	            return false;
+	        	view.loadUrl(url); //this is controversial - see comments and other answers
+	            return false;  
 	        }
 	    });
 		wv.loadUrl(activity.getLocation(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale.getDefault().getLanguage())));
@@ -163,4 +166,6 @@ public class UrlWidget extends WidgetFactory {
 		
 	}
 
+	
+	
 }

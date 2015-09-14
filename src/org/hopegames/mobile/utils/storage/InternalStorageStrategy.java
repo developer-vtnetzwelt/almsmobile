@@ -17,13 +17,13 @@
 
 package org.hopegames.mobile.utils.storage;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import java.io.File;
 
 import org.hopegames.mobile.activity.PrefsActivity;
 
-import java.io.File;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class InternalStorageStrategy implements StorageAccessStrategy{
 

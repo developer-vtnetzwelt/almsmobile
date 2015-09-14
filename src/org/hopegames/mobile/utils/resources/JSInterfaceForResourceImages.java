@@ -1,15 +1,15 @@
 package org.hopegames.mobile.utils.resources;
 
+import java.io.File;
+
+import org.hopegames.mobile.learning.R;
+import org.hopegames.mobile.utils.storage.FileUtils;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
-
-import org.hopegames.mobile.learning.R;
-import org.hopegames.mobile.utils.storage.FileUtils;
-
-import java.io.File;
 
 public class JSInterfaceForResourceImages {
 

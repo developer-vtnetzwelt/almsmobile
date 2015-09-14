@@ -17,16 +17,16 @@
 
 package org.hopegames.mobile.utils.storage;
 
+import java.io.File;
+
+import org.hopegames.mobile.activity.PrefsActivity;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-
-import org.hopegames.mobile.activity.PrefsActivity;
-
-import java.io.File;
 
 
 public class ExternalStorageStrategy implements StorageAccessStrategy{

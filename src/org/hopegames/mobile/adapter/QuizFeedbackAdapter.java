@@ -17,6 +17,12 @@
 
 package org.hopegames.mobile.adapter;
 
+import java.util.ArrayList;
+
+import org.digitalcampus.mobile.quiz.Quiz;
+import org.hopegames.mobile.learning.R;
+import org.hopegames.mobile.model.QuizFeedback;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -25,12 +31,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.hopegames.mobile.learning.R;
-import org.hopegames.mobile.model.QuizFeedback;
-import org.digitalcampus.mobile.quiz.Quiz;
-
-import java.util.ArrayList;
 
 public class QuizFeedbackAdapter extends ArrayAdapter<QuizFeedback> {
 

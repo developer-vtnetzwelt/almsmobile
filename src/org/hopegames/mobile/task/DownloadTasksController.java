@@ -17,13 +17,6 @@
 
 package org.hopegames.mobile.task;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
-
 import org.hopegames.mobile.activity.PrefsActivity;
 import org.hopegames.mobile.learning.R;
 import org.hopegames.mobile.listener.DownloadCompleteListener;
@@ -31,6 +24,13 @@ import org.hopegames.mobile.listener.DownloadMediaListener;
 import org.hopegames.mobile.listener.InstallCourseListener;
 import org.hopegames.mobile.listener.UpdateScheduleListener;
 import org.hopegames.mobile.model.DownloadProgress;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 
 public class DownloadTasksController implements Parcelable, InstallCourseListener, UpdateScheduleListener, DownloadMediaListener {
 

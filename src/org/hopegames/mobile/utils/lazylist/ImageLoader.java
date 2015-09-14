@@ -26,10 +26,10 @@ import java.util.concurrent.Executors;
 
 import org.hopegames.mobile.application.MobileLearning;
 
-import android.os.Handler;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.widget.ImageView;
 
 public class ImageLoader {

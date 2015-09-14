@@ -17,13 +17,13 @@
 
 package org.hopegames.mobile.activity;
 
-import android.support.v4.app.FragmentActivity;
-import android.view.MenuItem;
-
 import java.util.ArrayList;
 
 import org.hopegames.mobile.application.ScheduleReminders;
 import org.hopegames.mobile.learning.R;
+
+import android.support.v4.app.FragmentActivity;
+import android.view.MenuItem;
 
 
 public class AppActivity extends FragmentActivity {

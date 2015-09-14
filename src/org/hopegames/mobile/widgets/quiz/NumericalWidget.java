@@ -21,14 +21,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hopegames.mobile.learning.R;
 import org.digitalcampus.mobile.quiz.model.Response;
+import org.hopegames.mobile.learning.R;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 public class NumericalWidget extends TextInputQuizWidget {

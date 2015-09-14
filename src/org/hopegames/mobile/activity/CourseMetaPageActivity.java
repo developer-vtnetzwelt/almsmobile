@@ -17,21 +17,21 @@
 
 package org.hopegames.mobile.activity;
 
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.webkit.WebView;
-import android.widget.TextView;
+import java.io.File;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Locale;
 
 import org.hopegames.mobile.learning.R;
 import org.hopegames.mobile.model.Course;
 import org.hopegames.mobile.model.CourseMetaPage;
 import org.hopegames.mobile.utils.storage.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Locale;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.webkit.WebView;
+import android.widget.TextView;
 
 public class CourseMetaPageActivity extends AppActivity {
 

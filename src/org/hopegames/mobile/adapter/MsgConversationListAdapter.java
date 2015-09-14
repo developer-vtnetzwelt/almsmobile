@@ -2,9 +2,7 @@ package org.hopegames.mobile.adapter;
 
 import java.util.List;
 
-import org.hopegames.mobile.adapter.MsgMemberListAdapter.ViewHolder;
 import org.hopegames.mobile.learning.R;
-import org.hopegames.mobile.task.Payload;
 import org.hopegames.mobile.task.MessageModel.UserMessageMain;
 
 import android.content.Context;
@@ -12,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MsgConversationListAdapter extends BaseAdapter {

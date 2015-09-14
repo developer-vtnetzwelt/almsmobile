@@ -17,13 +17,13 @@
 
 package org.hopegames.mobile.task;
 
-import android.os.AsyncTask;
-import android.util.Log;
+import java.io.File;
+import java.io.IOException;
 
 import org.hopegames.mobile.utils.storage.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
+import android.os.AsyncTask;
+import android.util.Log;
 
 public class MoveStorageLocationTask extends AsyncTask<Payload, Object, Payload> {
 	

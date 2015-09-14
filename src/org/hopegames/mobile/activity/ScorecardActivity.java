@@ -30,13 +30,13 @@ import org.hopegames.mobile.utils.ImageUtils;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 

@@ -10,6 +10,7 @@
 package org.hopegames.mobile.utils.lazylist;
 
 import java.io.File;
+
 import android.content.Context;
 
 public class FileCache {

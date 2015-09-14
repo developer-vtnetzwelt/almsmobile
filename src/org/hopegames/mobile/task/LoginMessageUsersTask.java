@@ -19,7 +19,6 @@ import org.hopegames.mobile.application.MobileLearning;
 import org.hopegames.mobile.learning.R;
 import org.hopegames.mobile.listener.SubmitListener;
 import org.hopegames.mobile.model.User;
-import org.hopegames.mobile.task.MessageModel.UserMessageMain;
 import org.hopegames.mobile.utils.HTTPConnectionUtils;
 import org.json.JSONException;
 import org.json.JSONObject;

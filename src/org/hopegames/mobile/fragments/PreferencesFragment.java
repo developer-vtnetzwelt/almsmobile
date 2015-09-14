@@ -1,9 +1,8 @@
 package org.hopegames.mobile.fragments;
 
-import android.os.Bundle;
-import android.preference.EditTextPreference;
-import android.preference.ListPreference;
-import android.preference.PreferenceFragment;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import org.hopegames.mobile.activity.PrefsActivity;
 import org.hopegames.mobile.learning.R;
@@ -11,9 +10,10 @@ import org.hopegames.mobile.model.Lang;
 import org.hopegames.mobile.utils.storage.StorageLocationInfo;
 import org.hopegames.mobile.utils.storage.StorageUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.preference.ListPreference;
+import android.preference.PreferenceFragment;
 
 public class PreferencesFragment extends PreferenceFragment {
 

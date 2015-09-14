@@ -20,16 +20,12 @@ import org.hopegames.mobile.model.User;
 import org.hopegames.mobile.task.LoginTask;
 import org.hopegames.mobile.task.Payload;
 import org.hopegames.mobile.utils.HTTPConnectionUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-
-import com.bugsense.trace.BugSenseHandler;
-import com.google.gson.Gson;
 
 public class MessagePostTask extends AsyncTask<Payload, Object, Payload> {
 

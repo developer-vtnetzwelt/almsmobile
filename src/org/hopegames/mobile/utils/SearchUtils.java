@@ -17,9 +17,8 @@
 
 package org.hopegames.mobile.utils;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import org.hopegames.mobile.application.DatabaseManager;
 import org.hopegames.mobile.application.DbHelper;
@@ -30,8 +29,9 @@ import org.hopegames.mobile.model.Lang;
 import org.hopegames.mobile.task.Payload;
 import org.hopegames.mobile.utils.storage.FileUtils;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 
 public class SearchUtils {
 

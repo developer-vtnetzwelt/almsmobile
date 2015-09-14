@@ -3,7 +3,6 @@ package org.hopegames.mobile.activity;
 import java.util.ArrayList;
 
 import org.hopegames.mobile.adapter.CourseParticipantListAdapter;
-import org.hopegames.mobile.adapter.MsgCourseListAdapter;
 import org.hopegames.mobile.learning.R;
 import org.hopegames.mobile.listener.SubmitListener;
 import org.hopegames.mobile.model.User;

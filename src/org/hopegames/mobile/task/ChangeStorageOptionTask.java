@@ -17,11 +17,8 @@
 
 package org.hopegames.mobile.task;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.util.Log;
+import java.io.File;
+import java.io.IOException;
 
 import org.hopegames.mobile.activity.PrefsActivity;
 import org.hopegames.mobile.learning.R;
@@ -31,8 +28,11 @@ import org.hopegames.mobile.utils.storage.FileUtils;
 import org.hopegames.mobile.utils.storage.StorageAccessStrategy;
 import org.hopegames.mobile.utils.storage.StorageAccessStrategyFactory;
 
-import java.io.File;
-import java.io.IOException;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class ChangeStorageOptionTask extends AsyncTask<Payload, DownloadProgress, Payload> {
 

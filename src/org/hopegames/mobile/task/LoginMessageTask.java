@@ -15,14 +15,11 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.hopegames.mobile.activity.PrefsActivity;
-import org.hopegames.mobile.application.DatabaseManager;
-import org.hopegames.mobile.application.DbHelper;
 import org.hopegames.mobile.application.MobileLearning;
 import org.hopegames.mobile.learning.R;
 import org.hopegames.mobile.listener.SubmitListener;
 import org.hopegames.mobile.model.User;
 import org.hopegames.mobile.utils.HTTPConnectionUtils;
-import org.hopegames.mobile.utils.MetaDataUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 

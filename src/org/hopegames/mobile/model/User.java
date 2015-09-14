@@ -21,8 +21,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import android.R.string;
-
 public class User {
 
 	private int userid;

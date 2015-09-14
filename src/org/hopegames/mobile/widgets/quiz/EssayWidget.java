@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hopegames.mobile.learning.R;
 import org.digitalcampus.mobile.quiz.model.Response;
+import org.hopegames.mobile.learning.R;
 
 import android.app.Activity;
 import android.view.View;

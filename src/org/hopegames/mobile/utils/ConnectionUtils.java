@@ -2,7 +2,6 @@ package org.hopegames.mobile.utils;
 
 import org.hopegames.mobile.activity.PrefsActivity;
 
-import android.R.bool;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;

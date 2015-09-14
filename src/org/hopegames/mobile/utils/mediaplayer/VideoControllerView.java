@@ -16,6 +16,12 @@
 
 package org.hopegames.mobile.utils.mediaplayer;
 
+import java.lang.ref.WeakReference;
+import java.util.Formatter;
+import java.util.Locale;
+
+import org.hopegames.mobile.learning.R;
+
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -35,12 +41,6 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
-import java.lang.ref.WeakReference;
-import java.util.Formatter;
-import java.util.Locale;
-
-import org.hopegames.mobile.learning.R;
 
 
 /**

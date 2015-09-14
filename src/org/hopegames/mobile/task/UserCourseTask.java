@@ -29,7 +29,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.bugsense.trace.BugSenseHandler;
-import com.google.gson.Gson;
 
 public class UserCourseTask extends AsyncTask<Payload, Object, Payload> {
 

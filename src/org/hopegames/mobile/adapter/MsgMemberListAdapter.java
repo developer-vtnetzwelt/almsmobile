@@ -1,5 +1,8 @@
 package org.hopegames.mobile.adapter;
 
+import org.hopegames.mobile.learning.R;
+import org.hopegames.mobile.task.Payload;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.List;
-
-import org.hopegames.mobile.learning.R;
-import org.hopegames.mobile.task.Payload;
 
 /**
  * Created by Mini PC 5 on 01-04-2015.

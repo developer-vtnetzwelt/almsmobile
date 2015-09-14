@@ -16,6 +16,12 @@
  */
 package org.hopegames.mobile.activity;
 
+import java.util.Locale;
+
+import org.hopegames.mobile.learning.R;
+import org.hopegames.mobile.utils.ConnectionUtils;
+import org.hopegames.mobile.utils.storage.FileUtils;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,12 +32,6 @@ import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-
-import org.hopegames.mobile.learning.R;
-import org.hopegames.mobile.utils.ConnectionUtils;
-import org.hopegames.mobile.utils.storage.FileUtils;
-
-import java.util.Locale;
 
 public class MonitorActivity extends AppActivity {
 	
@@ -48,7 +48,6 @@ public class MonitorActivity extends AppActivity {
         
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		webView = new WebView(this);
-		
 		LinearLayout ll = (LinearLayout) findViewById(R.id.monitor_layout);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		webView.setLayoutParams(lp);

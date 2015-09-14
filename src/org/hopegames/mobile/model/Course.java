@@ -17,18 +17,18 @@
 
 package org.hopegames.mobile.model;
 
+import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Locale;
+
 import org.hopegames.mobile.application.MobileLearning;
 import org.hopegames.mobile.exception.CourseNotFoundException;
 import org.hopegames.mobile.utils.storage.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.File;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Locale;
 
 public class Course implements Serializable {
 	

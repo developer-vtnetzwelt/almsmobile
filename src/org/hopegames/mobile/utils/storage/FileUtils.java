@@ -17,18 +17,6 @@
 
 package org.hopegames.mobile.utils.storage;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.os.Build;
-import android.os.StatFs;
-import android.util.Log;
-import android.webkit.MimeTypeMap;
-
-import com.bugsense.trace.BugSenseHandler;
-
-import org.hopegames.mobile.application.MobileLearning;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -43,6 +31,16 @@ import java.io.InputStreamReader;
 import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import org.hopegames.mobile.application.MobileLearning;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.os.Build;
+import android.os.StatFs;
+import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 @SuppressLint("NewApi")
 public class FileUtils {

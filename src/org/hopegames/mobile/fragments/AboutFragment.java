@@ -71,6 +71,7 @@ public class AboutFragment extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		
 		prefs = PreferenceManager.getDefaultSharedPreferences(super.getActivity());
+		
 		webView = (WebView) super.getActivity().findViewById(R.id.about_webview);
 		String lang = prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale.getDefault().getLanguage());
 		String url = FileUtils.getLocalizedFilePath(super.getActivity(),lang, "about.html");

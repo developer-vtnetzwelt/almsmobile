@@ -1,6 +1,5 @@
 package org.hopegames.mobile.task.MessageModel;
 
-import java.math.BigInteger;
 
 public class UserMessageMain {
 

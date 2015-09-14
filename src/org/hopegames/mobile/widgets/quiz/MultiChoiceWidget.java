@@ -23,9 +23,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import org.digitalcampus.mobile.quiz.model.Response;
 import org.hopegames.mobile.activity.PrefsActivity;
 import org.hopegames.mobile.learning.R;
-import org.digitalcampus.mobile.quiz.model.Response;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
