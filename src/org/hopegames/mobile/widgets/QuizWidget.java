@@ -315,7 +315,7 @@ public class QuizWidget extends WidgetFactory {
 		// convert in case has any html special chars\
 		qText.setText(Html.fromHtml(
 				q.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-						.getDefault().getLanguage())).toString().replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>")));
+						.getDefault().getLanguage())).toString().replace("&nbsp;&nbsp;&nbsp;", "<br>").replace("&nbsp; &nbsp; &nbsp;", "<br>")));
 		
 		/*
 		 * Replace extra spaces with /n and remove multiple /n into singe /n
@@ -450,14 +450,16 @@ public class QuizWidget extends WidgetFactory {
 				if (saveAnswer()) {
 					String feedback = "";
 					try {
-						feedback = QuizWidget.this.quiz.getCurrentQuestion()
+						feedback = Html.fromHtml(QuizWidget.this.quiz.getCurrentQuestion()
 								.getFeedback(
 										prefs.getString(
 												PrefsActivity.PREF_LANGUAGE,
 												Locale.getDefault()
-														.getLanguage()));
+														.getLanguage())).replace("&nbsp;&nbsp;", "<br>").replace("&nbsp; &nbsp;", "<br>")).toString();
+						String eliminateSpacesIntoSingleNewLine = feedback.toString().replaceAll("\n+", "\n\n");
+						
 
-						if (!feedback.equals("")
+						if (!eliminateSpacesIntoSingleNewLine.equals("")
 								&& quiz.getShowFeedback() == Quiz.SHOW_FEEDBACK_ALWAYS
 								&& !QuizWidget.this.quiz.getCurrentQuestion()
 										.getFeedbackDisplayed()) {
@@ -466,7 +468,7 @@ public class QuizWidget extends WidgetFactory {
 									.getActivity().getSystemService(
 											Context.INPUT_METHOD_SERVICE);
 							imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-							showFeedback(feedback);
+							showFeedback(eliminateSpacesIntoSingleNewLine);
 						} else if (QuizWidget.this.quiz.hasNext()) {
 							QuizWidget.this.quiz.moveNext();
 							showQuestion();
@@ -861,26 +863,26 @@ public class QuizWidget extends WidgetFactory {
 					qf.setScore(q.getScoreAsPercent());
 					
 					/*
-					 * Replace extra spaces with /n and remove multiple /n into singe /n
+					 * Replace extra spaces with /n and remove multiple /n into single /n
 					 * 
 					 */
 					
-					qf.setQuestionText(q.getTitle(prefs.getString(
+					qf.setQuestionText(Html.fromHtml(q.getTitle(prefs.getString(
 							PrefsActivity.PREF_LANGUAGE, Locale.getDefault()
-									.getLanguage()).toString().replace("&nbsp;", "<br>").replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>")));
-					String eliminateSpacesIntoSingleNewLine = qText.getText().toString().replaceAll("\n+", "\n\n");
+									.getLanguage())).toString().replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>")).toString());
+					String eliminateSpacesIntoSingleNewLine = qf.getQuestionText().toString().replaceAll("\n+", "\n");
 					qf.setQuestionText(eliminateSpacesIntoSingleNewLine);
 					qf.setUserResponse(q.getUserResponses());
 					
 					/*
-					 * Replace extra spaces with /n and remove multiple /n into singe /n
+					 * Replace extra spaces with /n and remove multiple /n into single /n
 					 * 
 					 */
 					
-					qf.setFeedbackText(q.getFeedback(prefs.getString(
+					qf.setFeedbackText(Html.fromHtml(q.getFeedback(prefs.getString(
 							PrefsActivity.PREF_LANGUAGE, Locale.getDefault()
-									.getLanguage()).toString().replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>")));
-					String eliminateSpacesIntoSingleNewLine2 = qText.getText().toString().replaceAll("\n+", "\n\n");
+									.getLanguage())).toString().replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>")).toString());
+					String eliminateSpacesIntoSingleNewLine2 = qf.getFeedbackText().toString().replaceAll("\n+", "\n");
 					qf.setFeedbackText(eliminateSpacesIntoSingleNewLine2);
 					quizFeedback.add(qf);
 				}
@@ -1024,7 +1026,7 @@ public class QuizWidget extends WidgetFactory {
 		try {
 			toRead = quiz.getCurrentQuestion().getTitle(
 					prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-							.getDefault().getLanguage())).replace("&nbsp;", "<br>").replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>");
+							.getDefault().getLanguage())).replace("&nbsp;&nbsp;", "<br>").replace("&nbsp; &nbsp;", "<br>");
 		} catch (InvalidQuizException e) {
 			e.printStackTrace();
 		}
@@ -1033,7 +1035,7 @@ public class QuizWidget extends WidgetFactory {
 
 	private float getPercent() {
 		quiz.mark(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-				.getDefault().getLanguage()).replace("&nbsp;", "<br>").replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>"));
+				.getDefault().getLanguage()).replace("&nbsp;&nbsp;", "<br>").replace("&nbsp; &nbsp;", "<br>"));
 		float percent = quiz.getUserscore() * 100 / quiz.getMaxscore();
 		return percent;
 	}
