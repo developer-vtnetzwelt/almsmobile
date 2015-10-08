@@ -29,6 +29,7 @@ import org.hopegames.mobile.learning.R;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -52,7 +53,7 @@ public class MultiSelectWidget extends QuestionWidget {
     	
     	for (Response r : responses){
     		CheckBox chk= new CheckBox(ctx);  
-    		chk.setText(r.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale.getDefault().getLanguage())));
+    		chk.setText(Html.fromHtml(r.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale.getDefault().getLanguage())).replace("<p>", "").replace("</p>", "").replace("<br>", "")));
     		responsesLL.addView(chk);
     		Iterator<String> itr = currentAnswer.iterator();
     		while(itr.hasNext()){

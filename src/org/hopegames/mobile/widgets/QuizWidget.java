@@ -315,15 +315,15 @@ public class QuizWidget extends WidgetFactory {
 		// convert in case has any html special chars\
 		qText.setText(Html.fromHtml(
 				q.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-						.getDefault().getLanguage())).toString().replace("&nbsp;&nbsp;&nbsp;", "<br>").replace("&nbsp; &nbsp; &nbsp;", "<br>")));
+						.getDefault().getLanguage())).toString()));
 		
 		/*
 		 * Replace extra spaces with /n and remove multiple /n into singe /n
 		 * 
 		 */
 		
-		String eliminateSpacesIntoSingleNewLine = qText.getText().toString().replaceAll("\n+", "\n\n");
-		qText.setText(eliminateSpacesIntoSingleNewLine);
+		//String eliminateSpacesIntoSingleNewLine = qText.getText().toString().replaceAll("\n+", "\n\n");
+		//qText.setText(eliminateSpacesIntoSingleNewLine);
 
 		if (q.getProp("image") == null) {
 			questionImage.setVisibility(View.GONE);
@@ -332,7 +332,7 @@ public class QuizWidget extends WidgetFactory {
 			// File file = new File(fileUrl);
 			Bitmap myBitmap = BitmapFactory.decodeFile(fileUrl);
 			File file = new File(fileUrl);
-			ImageView iv = (ImageView) getView().findViewById(
+			ImageView iv = (ImageView) getView().findViewById( 
 					R.id.question_image_image);
 			iv.setImageBitmap(myBitmap);
 			iv.setTag(file);
@@ -455,8 +455,8 @@ public class QuizWidget extends WidgetFactory {
 										prefs.getString(
 												PrefsActivity.PREF_LANGUAGE,
 												Locale.getDefault()
-														.getLanguage())).replace("&nbsp;&nbsp;", "<br>").replace("&nbsp; &nbsp;", "<br>")).toString();
-						String eliminateSpacesIntoSingleNewLine = feedback.toString().replaceAll("\n+", "\n\n");
+														.getLanguage())).replace("<p>", "").replace("</p>", "").replace("<br>", "")).toString();
+						String eliminateSpacesIntoSingleNewLine = feedback.toString().replace("<p>", "").replace("</p>", "").replace("<br>", "");
 						
 
 						if (!eliminateSpacesIntoSingleNewLine.equals("")
@@ -612,14 +612,14 @@ public class QuizWidget extends WidgetFactory {
 		for (QuizQuestion q : questions) {
 			if (!(q instanceof Description)) {
 				q.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-						.getDefault().getLanguage()));
+						.getDefault().getLanguage()).replace("<p>", "").replace("</p>", "").replace("<br>", ""));
 				qmain = q;
 			}
 		}
 		if (qmain != null) {
 			textViewquiz_results__result_await_question_title.setText(qmain
 					.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE,
-							Locale.getDefault().getLanguage())));
+							Locale.getDefault().getLanguage())).replace("<p>", "").replace("</p>", "").replace("<br>", ""));
 		}
 		}else{
 			if (quizResultsLayout == null) {
@@ -664,14 +664,14 @@ public class QuizWidget extends WidgetFactory {
 			for (QuizQuestion q : questions) {
 				if (!(q instanceof Description)) {
 					q.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-							.getDefault().getLanguage()));
+							.getDefault().getLanguage()).replace("<p>", "").replace("</p>", "").replace("<br>", ""));
 					qmain = q;
 				}
 			}
 			if (qmain != null) {
 				quiz_results__result_scorecard_question_title.setText(qmain
 						.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE,
-								Locale.getDefault().getLanguage())));
+								Locale.getDefault().getLanguage()).replace("<p>", "").replace("</p>", "").replace("<br>", "")));
 			}
 		}
 
@@ -869,10 +869,23 @@ public class QuizWidget extends WidgetFactory {
 					
 					qf.setQuestionText(Html.fromHtml(q.getTitle(prefs.getString(
 							PrefsActivity.PREF_LANGUAGE, Locale.getDefault()
-									.getLanguage())).toString().replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>")).toString());
-					String eliminateSpacesIntoSingleNewLine = qf.getQuestionText().toString().replaceAll("\n+", "\n");
-					qf.setQuestionText(eliminateSpacesIntoSingleNewLine);
-					qf.setUserResponse(q.getUserResponses());
+									.getLanguage())).toString().replace("<p>", "").replace("</p>", "").replace("<br>", "")).toString());
+					//String eliminateSpacesIntoSingleNewLine = qf.getQuestionText().toString().replaceAll("\n+", "\n");
+					//qf.setQuestionText(eliminateSpacesIntoSingleNewLine);
+					List<String> modifiedResponseToShow = new ArrayList<String>();
+					for(int a = 0;a<q.getUserResponses().size();a++){
+						modifiedResponseToShow.add(q.getUserResponses().get(a).replace("<p>", "").replace("</p>", "").replace("<br>", ""));
+					}
+					
+					
+					
+					//qf.setUserResponse(q.getUserResponses());
+					
+					/*
+					 * Show response without html tags
+					 * 
+					 */
+					qf.setUserResponse(modifiedResponseToShow);
 					
 					/*
 					 * Replace extra spaces with /n and remove multiple /n into single /n
@@ -881,8 +894,8 @@ public class QuizWidget extends WidgetFactory {
 					
 					qf.setFeedbackText(Html.fromHtml(q.getFeedback(prefs.getString(
 							PrefsActivity.PREF_LANGUAGE, Locale.getDefault()
-									.getLanguage())).toString().replace("&nbsp;", "<br>").replace("&nbsp; ", "<br>")).toString());
-					String eliminateSpacesIntoSingleNewLine2 = qf.getFeedbackText().toString().replaceAll("\n+", "\n");
+									.getLanguage())).toString().replace("<p>", "").replace("</p>", "").replace("<br>", "")).toString());
+					String eliminateSpacesIntoSingleNewLine2 = qf.getFeedbackText().toString().replace("<p>", "").replace("</p>", "").replace("<br>", "");
 					qf.setFeedbackText(eliminateSpacesIntoSingleNewLine2);
 					quizFeedback.add(qf);
 				}
@@ -1026,7 +1039,7 @@ public class QuizWidget extends WidgetFactory {
 		try {
 			toRead = quiz.getCurrentQuestion().getTitle(
 					prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-							.getDefault().getLanguage())).replace("&nbsp;&nbsp;", "<br>").replace("&nbsp; &nbsp;", "<br>");
+							.getDefault().getLanguage()));
 		} catch (InvalidQuizException e) {
 			e.printStackTrace();
 		}
@@ -1035,7 +1048,7 @@ public class QuizWidget extends WidgetFactory {
 
 	private float getPercent() {
 		quiz.mark(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale
-				.getDefault().getLanguage()).replace("&nbsp;&nbsp;", "<br>").replace("&nbsp; &nbsp;", "<br>"));
+				.getDefault().getLanguage()));
 		float percent = quiz.getUserscore() * 100 / quiz.getMaxscore();
 		return percent;
 	}

@@ -30,6 +30,7 @@ import org.hopegames.mobile.learning.R;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -57,7 +58,8 @@ public class MultiChoiceWidget extends QuestionWidget{
     	for (Response r : responses){
     		RadioButton rb = new RadioButton(ctx);
     		rb.setId(id);
-			rb.setText(r.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale.getDefault().getLanguage())));
+    		
+			rb.setText(Html.fromHtml(r.getTitle(prefs.getString(PrefsActivity.PREF_LANGUAGE, Locale.getDefault().getLanguage())).toString().replace("<p>", "").replace("</p>", "").replace("<br>", "")));
 			responsesRG.addView(rb);
 			Iterator<String> itr = currentAnswer.iterator();
 			while(itr.hasNext()) {

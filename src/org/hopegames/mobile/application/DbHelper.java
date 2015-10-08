@@ -112,6 +112,78 @@ public class DbHelper extends SQLiteOpenHelper {
 	private static final String USER_C_LASTNAME = "lastname";
 	private static final String USER_C_PASSWORD = "passwordencrypted";
 	private static final String USER_C_APIKEY = "apikey";
+	
+	/*
+	 * message table coloumn names
+	 *
+	 * 
+	 *  "id": 7,
+      "useridfrom": 2,
+      "useridto": 78,
+      "subject": "New message from Admin User",
+      "text": "This  is test message from nitin",
+      "fullmessage": "This is test message from nitin\n\n--------------------------------------------------------------------- \nThis is a copy of a message sent to you at \"Adaptive Learning Management System\". Go to http:\/\ /tmpmoodle.hopecybrary.org\/message\/index.php?user=78&id=2 to reply.",
+      "fullmessageformat": 0,
+      "fullmessagehtml": "",
+      "smallmessage": "This is test message from nitin",
+      "notification": 0,
+      "contexturl": null,
+      "contexturlname": null,
+      "timecreated": 1439892116,
+      "timeread": 0,
+      "usertofullname": "Mobile nitintest",
+      "userfromfullname": "Admin  User"
+	 * 
+	 * 
+	 */
+	
+	
+	
+	
+	private static final String MSG_TABLE = "message";
+	private static final String MSG_M_ID = BaseColumns._ID;
+	private static final String MSG_MSG_ID = "id";//int
+	private static final String MSG_USER_ID_FROM = "useridfrom";//int
+	private static final String MSG_USER_ID_TO = "useridto";//int
+	private static final String MSG_SUBJECT="subject";
+	private static final String MSG_TEXT="text";
+	private static final String MSG_FULL_MSG="fullmessage";
+	private static final String MSG_FULL_MSG_FORMAT="fullmessageformat";//int
+	private static final String MSG_MSG_HTML="fullmessagehtml";
+	private static final String MSG_SMALL_MSG="smallmessage";
+	private static final String MSG_NOTIFICATION="notification";
+	private static final String MSG_CONTEXT_URL="contexturl";
+	private static final String MSG_CONTEXT_URL_NAME="contexturlname";
+	private static final String MSG_TIME_CRETATED="timecreated";//long
+	private static final String MSG_TIME_READ="timeread";//int
+	private static final String MSG_USER_TO_FULL_NAME="usertofullname";
+	private static final String MSG_USER_FROM_FULL_NAME="userfromfullname";
+	
+	
+	
+	private void createMsgTable(SQLiteDatabase db2) {
+		String m_sql = "create table " + MSG_TABLE + " (" + MSG_M_ID + " integer primary key autoincrement, "
+				+ MSG_MSG_ID + " int, "
+				+ MSG_USER_ID_FROM + " int, "
+				+ MSG_USER_ID_TO + " int, "
+				+ MSG_SUBJECT + " text, "
+				+ MSG_TEXT + " text, "
+				+ MSG_FULL_MSG + " text,"
+				+ MSG_FULL_MSG_FORMAT + " int, "
+				+ MSG_MSG_HTML + " text, "
+				+ MSG_SMALL_MSG + " text, "
+				+ MSG_NOTIFICATION + " text,"
+				+ MSG_CONTEXT_URL + " text, "
+				+ MSG_CONTEXT_URL_NAME + " text,"
+				+ MSG_TIME_CRETATED + " long,"
+				+ MSG_TIME_READ + " int,"
+				+ MSG_USER_TO_FULL_NAME + " text,"
+				+ MSG_USER_FROM_FULL_NAME + " text)";
+		db.execSQL(m_sql);
+		
+	}
+	
+	
 		
 	// Constructor
 	public DbHelper(Context ctx) { //
@@ -129,7 +201,10 @@ public class DbHelper extends SQLiteOpenHelper {
 		createQuizResultsTable(db);
 		createSearchTable(db);
 		createUserTable(db);
+		//createMsgTable(db);
 	}
+
+	
 
 	public void createCourseTable(SQLiteDatabase db){
 		String m_sql = "create table " + COURSE_TABLE + " (" + COURSE_C_ID + " integer primary key autoincrement, "
@@ -141,6 +216,24 @@ public class DbHelper extends SQLiteOpenHelper {
 				+ COURSE_C_LANGS + " text)";
 		db.execSQL(m_sql);
 	}
+	
+	
+	/*
+	 * message table use for offline mode
+	 */
+	
+	
+	public void createMessageTable(SQLiteDatabase db){
+		String m_sql = "create table " + COURSE_TABLE + " (" + COURSE_C_ID + " integer primary key autoincrement, "
+				+ COURSE_C_VERSIONID + " int, " + COURSE_C_TITLE + " text, " + COURSE_C_LOCATION + " text, "
+				+ COURSE_C_SHORTNAME + " text," + COURSE_C_SCHEDULE + " int,"
+				+ COURSE_C_IMAGE + " text,"
+				+ COURSE_C_DESC + " text,"
+				+ COURSE_C_ORDER_PRIORITY + " integer default 0, " 
+				+ COURSE_C_LANGS + " text)";
+		db.execSQL(m_sql);
+	}
+	
 	
 	public void createActivityTable(SQLiteDatabase db){
 		String a_sql = "create table " + ACTIVITY_TABLE + " (" + 
